@@ -6,12 +6,17 @@
         <div class="row">
           <div class="col-lg-4 hidden-md-down">
             <div class="contact-email">
-              <span>Email us: <a href="mailto:admin@nutrihublb.com">admin@nutrihublb.com</a></span>
+              <span>Email us: <a href="mailto:admin@accessories.com">info@talyscollection.com</a></span>
             </div>
           </div>
-          <div class="col-md-6 col-lg-4 text-md-start text-lg-center text-center">
 
-          </div>
+                <div class="col-md-6 col-lg-4 text-md-start text-lg-center text-center">
+                    <div class="luxury-ticker">
+                        <div class="ticker-item text-white">✨ Free Delivery on all orders over $100</div>
+                        <div class="ticker-item text-white">💎 New Jewelry Collection is Live</div>
+                        <div class="ticker-item text-white">🌸 Handcrafted with Love in Lebanon</div>
+                    </div>
+                </div>
           <div class="col-md-6 col-lg-4 text-md-end text-center mt-sm-15">
             @guest
             <div class="theme-setting">
@@ -99,10 +104,14 @@
         <div class="row align-items-center">
           <div class="col col-md-4 col-sm-12">
             <div class="contact-link">
-              <div class="contact-info">
-                <span class="phone">Call Us: <a href="tel:00961 3 979504">00961 3 979504</a></span>
-                <div class="time-contact">6 Days a week from 9:00 am to 10:00 pm</div>
-              </div>
+      <div class="contact-info">
+    <span class="phone" style="display: block; font-weight: 600; margin-bottom: 3px;">
+        Talk To Us: <a href="tel:00961 79353846" style="color: #D97DA5;">00961 79353846</a>
+    </span>
+    <div class="time-contact" style="font-size: 9px; color: #aaa; text-transform: uppercase; letter-spacing: 1.2px; line-height: 1.4;">
+        Our style concierge is at your service Monday through Saturday, 9 AM – 10 PM
+    </div>
+</div>
             </div>
           </div>
           <div class="col col-md-4 col-sm-12">
@@ -167,10 +176,13 @@
               <div class="header-navigation-area hidden-md-down">
                 <ul class="main-menu nav">
               
-                      <li><a href="{{ url('aboutus') }}">Why Lakanto MonkFruit</a></li>
+                      <li><a href="{{ url('aboutus') }}">About Us</a></li>
                       <li><a href="{{ url('collections')}}">Shop Products</a>
-                 
-                      <li><a href="{{ url('blogs')}}">Health News</a>           
+                      <li><a href="{{ url('collections')}}">Jewellery</a>
+                      <li><a href="{{ url('collections')}}">lunette</a>
+                      <li><a href="{{ url('collections')}}">bags</a>
+                      <li><a href="{{ url('collections')}}">makeup</a>
+                      <li><a href="{{ url('blogs')}}">News</a>           
                       </li>
                       <li><a href="{{ url('contactus') }}">Contact us</a></li>
                     </ul>
@@ -227,8 +239,89 @@
     <!--== End Responsive Header ==-->
   </header>
   <!--== End Header Wrapper ==-->
-  <style>
-    .icon-user{
+<style>
+    
+    /* Small text aesthetic for luxury feel */
+    .header-top, 
+    .main-menu li a, 
+    .contact-info span, 
+    .dropdown-btn {
+      font-size: 13px !important; 
+      text-transform: capitalize;
+      font-weight: 700;
+    }
+
+    .header-top {
+      border-bottom: 1px solid #f2f2f2;
+      padding: 6px 0;
+    }
+
+    .shop-count {
+      background: #D97DA5 !important; /* Subtle gold/neutral tone for accessories */
+      font-size: 9px !important;
+    }
+
+    .icon-user {
       display: none;
     }
+
+    /* Sticky Blur Effect */
+    .sticky-header.sticky-on {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .header-area .header-top .contact-email span{
+      font-size: 13px !important;
+        text-transform: capitalize;
+        font-weight: 700;
+    }
+      .header-area .header-top .contact-email span a { 
+          text-transform: lowercase;
+      }
+  /* ANIMATED TICKER CSS */
+    .luxury-ticker {
+        height: 20px;
+        overflow: hidden;
+        position: relative;
+    }
+    .ticker-item {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: lowercase;
+
+        color: #D97DA5; /* Matches your logo pink */
+        line-height: 20px;
+        animation: tickerAnimation 9s infinite;
+        position: absolute;
+        width: 100%;
+        opacity: 0;
+    }
+    .ticker-item:nth-child(1) { animation-delay: 0s; }
+    .ticker-item:nth-child(2) { animation-delay: 3s; }
+    .ticker-item:nth-child(3) { animation-delay: 6s; }
+
+    @keyframes tickerAnimation {
+        0% { opacity: 0; transform: translateY(10px); }
+        5% { opacity: 1; transform: translateY(0); }
+        30% { opacity: 1; transform: translateY(0); }
+        35% { opacity: 0; transform: translateY(-10px); }
+        100% { opacity: 0; }
+    }
+    @media (max-width: 991px) {
+     .logo-main {
+      max-width: 90px !important; /* Forces logo to be small and elegant */
+      height: auto;
+      transition: transform 0.3s ease;
+    }
+    
+}
+    @media (min-width: 991px) {
+     .logo-main {
+      max-width: 100px !important; /* Forces logo to be small and elegant */
+      height: auto;
+      transition: transform 0.3s ease;
+    }
+    
+}
   </style>

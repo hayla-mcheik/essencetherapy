@@ -96,13 +96,6 @@
                         </div>
                       </div>
        
-                      <div class="social-sharing">
-                        <span>Share</span>
-                        <div class="social-icons">
-                          <a href="#/"><i class="la la-facebook"></i></a>
-                          <a href="#/"><i class="la la-twitter"></i></a>
-                        </div>
-                      </div>
                     </div>
                     <!--== End Product Info Area ==-->
                   </div>

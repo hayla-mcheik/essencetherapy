@@ -211,7 +211,7 @@
               items: 3,
             },
             992: {
-              items: 3,
+              items: 4,
             },
             1200: {
               items: 4,
@@ -392,10 +392,10 @@
                   items: 1,
               },
               992 : {
-                  items:2,
+                  items:3,
               },
             1200 : {
-                  items: 2,
+                  items: 3,
               }
           }
         });
@@ -416,10 +416,10 @@
               items: 1,
             },
             768: {
-              items: 2,
+              items: 3,
             },
             992: {
-              items: 2,
+              items: 3,
             },
             1200: {
               items: 3,

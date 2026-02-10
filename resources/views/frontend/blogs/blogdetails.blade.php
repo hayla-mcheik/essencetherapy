@@ -68,7 +68,6 @@
                       <div class="meta">
                         <ul>
                           <li><a class="date">{{ $blog->date }}</a></li>
-                          <li><span>By,</span> <a class="author" href="blog.html">{{ $blog->by }}</a></li>
                         </ul>
                       </div>
                       <h2 class="title">{{$blog->title }}</h2>

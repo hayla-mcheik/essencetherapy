@@ -50,13 +50,13 @@
     <style>
         /* Enhanced Footer Styles */
         .footer-connect-section {
-            background: black;
+            background: var(--logo-pink-dark) ;
             padding: 0px 0;
             color: #fff;
         }
         
         .footer-connect-section .section-title {
-            font-size: 28px;
+            font-size: 18px;
             font-weight: 600;
             margin-bottom: 25px;
             color: #fff;
@@ -116,7 +116,7 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             color: #fff;
-            font-size: 20px;
+            font-size: 14px;
             transition: all 0.3s ease;
             text-decoration: none;
         }
@@ -142,6 +142,7 @@
             border-radius: 25px;
             padding: 0 20px;
             margin-bottom: 15px;
+            font-size: 12px
         }
         
         .newsletter-form-enhanced .form-control:focus {
@@ -175,19 +176,21 @@
         
         .connect-description {
             color: rgba(255, 255, 255, 0.8);
-            font-size: 15px;
+            font-size: 12px;
             line-height: 1.6;
             margin-bottom: 0;
         }
         
         .newsletter-description {
             color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
+            font-size: 12px;
             line-height: 1.5;
             margin-top: 15px;
             margin-bottom: 0;
         }
-        
+                .newsletter-form-enhanced .btn-submit-enhanced {
+                    font-size: 12px;
+                }
         .alert {
             border-radius: 10px;
             margin-bottom: 20px;
@@ -205,8 +208,9 @@
             }
             
             .footer-connect-section .section-title {
-                font-size: 24px;
+                font-size: 1.1rem;
             }
+
             
             .social-icons-enhanced {
                 gap: 10px;
@@ -217,6 +221,8 @@
                 height: 45px;
                 font-size: 18px;
             }
+        .connect-description{
+            font-size: 12px;
         }
         
         @media (max-width: 576px) {
@@ -229,6 +235,81 @@
                 padding: 0 20px;
             }
         }
+
+        /* Shipping Update Popup Styles */
+#shippingModal .modal-content {
+    border: none;
+    border-radius: 4px; /* Clean edges like Nevo */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+#shippingModal .modal-body {
+    padding: 50px 40px;
+}
+
+#shippingModal .shipping-emoji {
+    font-size: 30px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+#shippingModal .modal-title-custom {
+    color: #D97DA5; /* Your logo pink */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+#shippingModal .notice-text {
+    color: #D97DA5;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+#shippingModal .secondary-text {
+    color: #D97DA5;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+#shippingModal .btn-start-shopping {
+    background-color: #D97DA5;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    transition: opacity 0.3s;
+}
+
+#shippingModal .btn-start-shopping:hover {
+    opacity: 0.8;
+    color: white;
+}
+
+#shippingModal .no-thanks {
+    display: block;
+    margin-top: 20px;
+    color: #999;
+    font-size: 13px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#shippingModal .social-links-popup {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    color: #D97DA5;
+    font-size: 20px;
+}
     </style>
 
     <!--[if lt IE 9]>
@@ -247,19 +328,6 @@
 <!--wrapper start-->
 <div class="wrapper home-default-wrapper">
 
-    <!--== Start Preloader Content ==-->
-    <div class="preloader-wrap">
-      <div class="preloader">
-        <span class="dot"></span>
-        <div class="dots">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-    </div>
-    <!--== End Preloader Content ==-->
-
 
 @if(Request::is('/'))
 @include('layouts.inc.frontend.navbar')
@@ -271,7 +339,7 @@
             @yield('content')
             
     <!--== Start Contact Info Area Wrapper ==-->
-    <section class="bg-black-color">
+    <section class="bg-light">
       <div class="container pt-35 pb-40">
         <div class="row">
           <div class="col-12">
@@ -385,6 +453,39 @@
      
     </div>
 
+    <div class="modal fade" id="shippingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="text-end p-3">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <span class="shipping-emoji">🚨</span>
+                <h2 class="modal-title-custom">Shipping Update</h2>
+                
+                <p class="notice-text">
+                    loreum ipsum loreum ipsum loreum ipsum loreum ipsum loreum ipsum loreum ipsum loreum ipsum.
+                </p>
+                
+                <p class="secondary-text">
+                    You can also shop our Direct Delivery items for faster shipping.
+                </p>
+                
+                <a href="{{ url('/collections') }}" class="btn btn-start-shopping">Start Shopping</a>
+                
+                <span class="no-thanks" data-bs-dismiss="modal">No thanks</span>
+                
+                <div class="social-links-popup">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-instagram"></i></a>
+                    <a href="#"><i class="fa fa-tiktok"></i></a>
+                    <a href="#"><i class="fa fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--=== Modernizr Min Js ===-->
 <script src="{{ asset('assets/js/modernizr.js')}}"></script>
 <!--=== jQuery Min Js ===-->
@@ -416,14 +517,53 @@
 <script src="{{ asset('assets/js/custom.js')}}"></script>
 
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-    <script>
-        window.addEventListener('message', event => {
-            console.log('Message event trigge#d40707');
-            alertify.set('notifier','position', 'top-right');
-            alertify.notify(event.detail.text , event.detail.type);
-        });
-    </script>
+<script>
+    window.addEventListener('message', event => {
+        alertify.set('notifier','position', 'top-right');
+        alertify.notify(event.detail.text , event.detail.type);
+    });
 
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log("Checking for Shipping Popup..."); // Check F12 Console for this
+
+        // 1. Check if we are on the Home Page
+        var isHomePage = window.location.pathname === '/' || 
+                         window.location.pathname === '/index.php' ||
+                         window.location.pathname.endsWith('/');
+
+        if (isHomePage) {
+            
+            // 2. Check Session Storage (Clear your cache/incognito to test)
+            if (!sessionStorage.getItem('shownShippingPopup')) {
+                
+                var modalElement = document.getElementById('shippingModal');
+                
+                if (modalElement) {
+                    // Force a delay to ensure Bootstrap is fully loaded
+                    setTimeout(function() {
+                        try {
+                            // Using the modern Bootstrap 5 way
+                            var myModal = new bootstrap.Modal(modalElement);
+                            myModal.show();
+                            sessionStorage.setItem('shownShippingPopup', 'true');
+                            console.log("Popup launched successfully.");
+                        } catch (err) {
+                            console.error("Bootstrap Modal Error: ", err);
+                            // Fallback for Bootstrap 4 if the above fails
+                            if (window.$) {
+                                $(modalElement).modal('show');
+                            }
+                        }
+                    }, 1000); 
+                } else {
+                    console.error("Error: Element #shippingModal not found in HTML.");
+                }
+            } else {
+                console.log("Popup already shown this session.");
+            }
+        }
+    });
+</script>
     @yield('script')
     @livewireScripts
     @stack('scripts')

@@ -4,169 +4,462 @@
 
 
 
-    <!--== Start Hero Area Wrapper ==-->
-    <section class="home-slider-area">
-        <div class="swiper-container swiper-pagination-style dots-bg-light home-slider-container default-slider-container">
-          <div class="swiper-wrapper home-slider-wrapper slider-default">
-            
-            @foreach ($sliders as $key => $sliderItem)
-            <div class="swiper-slide {{ $key == 0 ? 'active':''}}">
-                @if ($sliderItem->image)
-                <div class="slider-content-area" data-bg-img="{{ asset("$sliderItem->image") }}">
-            @endif
-  
-                <div class="container">
-                  <div class="row">
-                    <div class="col-10 col-sm-6 col-md-5">
-                      <div class="slider-content slider-content-light animate-flipInX">
-                        {{-- <h5 class="sub-title transition-slide-0">{{ $sliderItem->title }}</h5>
-                        <h2 class="title transition-slide-1 mb-0"><span class="font-weight-400">{{ $sliderItem->description }}</span></h2> --}}
-                        {{-- <a class="btn-slide transition-slide-3" href="{{url('collections') }}">Shop Now</a> --}}
-                      </div>
+<section class="home-slider-area pt-0 p-0">
+    <div class="container-fluid p-0 pt-2 pb-2"> <div class="row g-0 align-items-center"> <div class="col-lg-3 d-none d-lg-block">
+                <div class="featured-banner-left" style="position: relative; overflow: hidden; height: 70vh;">
+                    <img src="{{ asset('assets/img/image-left.jpg') }}" 
+                         alt="Featured Collection" 
+                         style="width: 100%; height: 100%; object-fit: cover;">
+                    
+                    <div class="banner-overlay-text" style="position: absolute; bottom: 30px; left: 20px; color: #fff;">
+                        <h6 style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">New Arrivals</h6>
+                        <h4 style="font-size: 18px; font-weight: 600;">The Pearl <br> Collection</h4>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
-        @endforeach
-          </div>
-  
-          <!--== Add Swiper Pagination ==-->
-          <div class="swiper-pagination"></div>
-        </div>
-      </section>
-      <!--== End Hero Area Wrapper ==-->
 
-
-    <!--== Start Product Area Wrapper ==-->
-    <section class="product-area">
-        <div class="container pb-lg-60">
-          <div class="row">
-            <div class="col-sm-8 m-auto">
-              <div class="section-title text-center mb-30">
-                <h2 class="title">Our Products</h2>
-                <div class="desc">
-                  <p>Add our products to weekly line up</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-                <div class="product-tabs-content-wrap">
-                    <ul class="nav mb-25 product-tab-nav" id="pills-tab" role="tablist">
-                      @foreach ($categories as $category)
-                        <li role="presentation">
-                          <a class="nav-link @if ($loop->first) active @endif" id="{{ $category->slug }}-tab" data-bs-toggle="pill" href="#{{ $category->slug }}" role="tab" aria-controls="{{ $category->slug }}" aria-selected="{{ $loop->first ? 'true' : 'false' }}">{{ $category->name }}</a>
-                        </li>
-                      @endforeach
-                    </ul>
-                    <div class="tab-content product-tab-content" id="pills-tabContent">
-                      @foreach ($categories as $category)
-                        <div class="tab-pane fade @if ($loop->first) show active @endif" id="{{ $category->slug }}" role="tabpanel" aria-labelledby="{{ $category->slug }}-tab">
-                          <div class="row">
-                            <div class="col-12">
-                              <div class="product-slider owl-carousel owl-theme">
-                                @foreach ($category->products as $product)
-                                  <div class="item">
-                                    <!--== Start Shop Item ==-->
-                                    <div class="product-item">
-                                      <div class="inner-content">
-                                        <div class="product-thumb">
-                                          <a href="{{ url('/collections/'.$product->category->slug.'/'.$product->slug) }}">
-                                            @if($product->productImages->count() > 0)
-                                            <img src="{{ asset($product->productImages[0]->image) }}" alt="product-img">                        
-                                        <img class="second-image" src="{{ asset($product->productImages[1]->image ?? $product->productImages[0]->image) }}" alt="product-img">
-                                    @endif 
-                                          </a>
-                               <livewire:frontend.indexwish :product="$product"/>
-                               <div class="white-bg">                           
-                               <livewire:frontend.cart.add-to-cart :product="$product"/>
-                               </div>
-                                          <ul class="product-flag">
-                                      
-                                              <li class="new">
-                                                @if ($product->quantity > 0)
-                                                <span>In Stock</span>
-                                            @else
-                                              Out of Stock
-                                            @endif
-                                              </li>
-                                       
-                                              @if($product->original_price)
-                                              @php
-                                                $discount = (($product->original_price - $product->selling_price) / $product->original_price ) * 100;
-                                              @endphp
-                                            
-                                              <li class="discount">-{{ round($discount , 0) }}%</li>
-                                            @endif
-                                          </ul>
+            <div class="col-12 col-lg-9">
+                <div class="swiper-container swiper-pagination-style dots-bg-light home-slider-container default-slider-container" style="height: 70vh;">
+                    <div class="swiper-wrapper home-slider-wrapper slider-default">
+                        
+                        @foreach ($sliders as $key => $sliderItem)
+                        <div class="swiper-slide {{ $key == 0 ? 'active':''}}">
+                            @if ($sliderItem->image)
+                            <div class="slider-content-area" data-bg-img="{{ asset("$sliderItem->image") }}" style="height: 100%; background-size: cover; background-position: center;">
+                            @endif
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-10 col-sm-6 col-md-5">
+                                            <div class="slider-content slider-content-light animate-flipInX">
+                                                </div>
                                         </div>
-                                        <div class="product-desc">
-                                          <div class="product-info">
-                                            <h4 class="title"><a href="{{ url('/collections/'.$product->category->slug.'/'.$product->slug) }}">{{ $product->name }}</a></h4>
-                                    
-                                            <div class="prices">
-                                              <span class="price-old">€{{ $product->original_price }}</span>
-                                              <span class="price">€{{ $product->selling_price }}</span>
-                                            </div>
-                                 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
 
-                                          </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<style>
+    /* Styling to make the 3/9 split look integrated */
+    .featured-banner-left {
+        border-right: 1px solid #f2f2f2;
+    }
+    
+    .home-slider-container {
+        border-radius: 0; /* Keep it sharp for luxury aesthetic */
+    }
+
+    /* Adjust height for mobile */
+    @media (max-width: 991px) {
+        .home-slider-container, .featured-banner-left {
+            height: 350px !important;
+        }
+    }
+</style>
 
 
-                                 
-                                       
-                                          
+<section>
+    <div class="about-editorial-root py-5 position-relative overflow-hidden">
+        
+        <div class="art-background-layer">
+            <div class="large-bg-text">prepare to be pampred</div>
+            <svg class="botanical-svg" viewBox="0 0 100 100" fill="none">
+                <path d="M10 80C30 80 80 60 90 10M10 80C40 70 80 40 90 10" stroke="#b95c19" stroke-width="0.2" opacity="0.2"/>
+            </svg>
+        </div>
+
+        <div class="wide-content-wrapper px-4 px-md-5 position-relative z-2">
+            
+            <div class="header-minimal mb-4">
+                <span class="eyebrow">Established 2026</span>
+                <h2 class="display-title mt-2">Tallys Collections Accessories</h2>
+ 
+            </div>
+
+            <div class="description-full-width">
+                <p class="editorial-text" v-html="">Welcome to Nails At Home, Dubai’s first beauty home service that was established in 2005 to pamper you in the comfort of your own home. No longer do you have to rush for appointments, deal with traffic or risk exposing your recently manicured nails to the elements. Nails At Home brings the treatment to you. Imagine experiencing the world’s most luxurious spa treatment in your own home! Our teams of specialists are dedicated to offering only the best service, by applying strict hygiene standards on all implements, and using only hand picked beauty care products. We can’t wait to reach you, and give you the treatment you deserve. So give us a call, settle into a comfortable couch, and prepare to be pampered!</p>
+            </div>
+
+            <div class="footer-compact mt-5 d-flex align-items-center gap-4">
+                <div class="signature-wrap">
+                    <img src="/assets/img/logo.png" alt="Signature" class="about-sig-logo">
+            
+                </div>
+            
+                <span class="motto mt-4">Nails At Home</span>
+            </div>
+            
+        </div>
+    </div>
+  </section>
+
+<script setup>
+defineProps({ about: Object });
+</script>
+
+<style >
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400&family=Montserrat:wght@300;400;600;700&display=swap');
+
+.about-editorial-root {
+    background-color: #ffffff;
+    color: #51555A;
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+    min-height: 20vh;
+    display: flex;
+    align-items: center;
+}
+
+/* Background "Polish It" Text Styling */
+.art-background-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.large-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 10vw;
+    font-weight: 900;
+    color: #d97da50d !important; /* Extremely subtle grey-white */
+    letter-spacing: -5px;
+    line-height: 0.8;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+.botanical-svg {
+    position: absolute;
+    width: 25%;
+    top: 10%;
+    right: -2%;
+    z-index: 1;
+    transform: rotate(-15deg);
+}
+
+/* Content Layout */
+.wide-content-wrapper {
+    width: 100%;
+    z-index: 2;
+}
+
+/* Typography - Small & Refined */
+.eyebrow {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #D97DA5 !important;
+    font-weight: 700;
+}
+
+.display-title {
+    font-size: 24px; /* Reduced for elegance */
+    font-weight: 700;
+    color: #51555A;
+    text-transform: capitalize;
+}
+
+.accent-line {
+    width: 40px;
+    height: 1px;
+    background-color: #D97DA5 !important;
+}
+
+.editorial-text {
+    /* Small font size matching footer (approx 13px) */
+    font-size: 0.75rem; 
+    line-height: 2.2;
+    color: #51555A;
+    font-weight: 400;
+
+    letter-spacing: 0.4px;
+}
+
+/* Signature & Logo Styling */
+.about-sig-logo {
+    width: 55px;
+    height: auto;
+    opacity: 0.9;
+}
+
+.sig-font {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #1a1a1a;
+}
+
+.dot-divider {
+    width: 4px;
+    height: 4px;
+    background-color: #D97DA5 !important;
+    border-radius: 50%;
+}
+
+.motto {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #999;
+}
+
+@media (max-width: 768px) {
+    .large-bg-text { font-size: 10vw; left: -10%; }
+    .display-title { font-size: 1.1rem; margin-top: 20px !important; }
+    .editorial-text { font-size: 0.7rem; max-width: 100%; }
+    .footer-compact { flex-direction: column; align-items: flex-start; gap: 15px; }
+    .dot-divider { display: none; }
+}
+</style>
+
+<section class="product-area">
+    <div class="container pb-lg-60">
+      <div class="row">
+        <div class="col-sm-8 m-auto">
+          <div class="section-title text-center mb-1">
+            <h2 class="title" style=" text-transform: capitalize;">Our Products</h2>
+            <div class="desc">
+              <p style="font-size: 0.8rem; color: #51555a; font-weight: 400;">Add our products to weekly line up</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+            <div class="product-tabs-content-wrap">
+                <ul class="nav mb-25 product-tab-nav" id="pills-tab" role="tablist" style="justify-content: center;">
+                  @foreach ($categories as $category)
+                    <li role="presentation">
+                      <a class="nav-link @if ($loop->first) active @endif" 
+                         id="{{ $category->slug }}-tab" 
+                         data-bs-toggle="pill" 
+                         href="#{{ $category->slug }}" 
+                         role="tab" 
+                         aria-controls="{{ $category->slug }}" 
+                         aria-selected="{{ $loop->first ? 'true' : 'false' }}"
+                         style="font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px;">
+                         {{ $category->name }}
+                      </a>
+                    </li>
+                  @endforeach
+                </ul>
+                <div class="tab-content product-tab-content" id="pills-tabContent">
+                  @foreach ($categories as $category)
+                    <div class="tab-pane fade @if ($loop->first) show active @endif" id="{{ $category->slug }}" role="tabpanel" aria-labelledby="{{ $category->slug }}-tab">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="product-slider owl-carousel owl-theme">
+                            @foreach ($category->products as $product)
+                              <div class="item">
+                                <div class="product-item">
+                                  <div class="inner-content">
+                                    <div class="product-thumb">
+                                      <a href="{{ url('/collections/'.$product->category->slug.'/'.$product->slug) }}">
+                                        @if($product->productImages->count() > 0)
+                                        <img src="{{ asset($product->productImages[0]->image) }}" alt="product-img">                        
+                                        <img class="second-image" src="{{ asset($product->productImages[1]->image ?? $product->productImages[0]->image) }}" alt="product-img">
+                                        @endif 
+                                      </a>
+                                      <livewire:frontend.indexwish :product="$product"/>
+                                      <div class="white-bg">                            
+                                      <livewire:frontend.cart.add-to-cart :product="$product"/>
+                                      </div>
+                                      <ul class="product-flag">
+                                                <li class="new" style="font-size: 10px;">
+                                                    @if ($product->quantity > 0)
+                                                        <span>In Stock</span>
+                                                    @else
+                                                        Out of Stock
+                                                    @endif
+                                                </li>
+                                                @if($product->original_price)
+                                                    @php
+                                                        $discount = (($product->original_price - $product->selling_price) / $product->original_price ) * 100;
+                                                    @endphp
+                                                    <li class="discount" style="font-size: 9px;">-{{ round($discount , 0) }}%</li>
+                                                @endif
+                                            </ul>
+                                    </div>
+                                    <div class="product-desc" style="padding: 10px 0;">
+                                      <div class="product-info text-center">
+                                        <h4 class="title" style="margin-bottom: 5px;">
+                                            <a href="{{ url('/collections/'.$product->category->slug.'/'.$product->slug) }}" 
+                                               style="color:#51555a; font-size: 0.75rem; font-weight: 700;">
+                                               {{ $product->name }}
+                                            </a>
+                                        </h4>
+                                        <div class="prices">
+                                          <span class="price-old" style="font-size: 10px; color: #51555a; text-decoration: line-through; margin-right: 5px;">€{{ $product->original_price }}</span>
+                                          <span class="price" style="font-size: 12px; font-weight: 600; color: #D97DA5;">€{{ $product->selling_price }}</span>
                                         </div>
                                       </div>
                                     </div>
-                                    <!--== End Shop Item ==-->
                                   </div>
-                                @endforeach
-                              </div>
-                            </div>
+                                </div>
+                                </div>
+                            @endforeach
                           </div>
                         </div>
-                        
-                      @endforeach
+                      </div>
                     </div>
-                  </div>
-                  
-            </div>
-          </div>
+                  @endforeach
+                </div>
+              </div>
         </div>
-      </section>
-      <!--== End Product Area Wrapper ==-->
+      </div>
+    </div>
+</section>
 
   <!--== End Popup Product  ==-->
-      <section class="divider-area divider-product-discount-area bg-img" data-bg-img="{{ asset('assets/img/banner/banner.webp')}}" style="background-image: url(&quot;assets/img/photos/bg-01.jpg&quot;);">
-        <div class="container">
+<section class="divider-area divider-product-discount-area bg-img" data-bg-img="{{ asset('assets/img/banner-home.jpg')}}">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="divider-style2-wrap">
           <div class="row">
-            <div class="col-12">
-              <div class="divider-style2-wrap">
-                <div class="row">
-                  <div class="col-xl-4">
-
-                  </div>
+            <div class="col-xl-5 col-lg-6 col-md-9 col-sm-12">
+              <div class="accessory-banner-content animate-fadeInUp">
+                <h6 class="banner-sub-title">The Art of Detail</h6>
+                <h2 class="banner-main-title">Elevate Your <br class="d-none d-md-block">Everyday Look</h2>
+                <p class="banner-description">
+                  Discover a curated collection of accessories designed to celebrate your unique elegance. From morning coffee to midnight stars.
+                </p>
+                <div class="banner-action">
+                  <a class="btn-boutique" href="{{ url('collections') }}">Explore Collection</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  /* Base Desktop Styling */
+  .divider-product-discount-area {
+    padding: 100px 0;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 450px;
+    display: flex;
+    align-items: center;
+  }
+
+  .accessory-banner-content {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 35px; /* Reduced padding for cleaner look */
+    border-radius: 2px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  }
+
+  /* Small Typography Aesthetic */
+  .banner-sub-title {
+    font-size: 9px !important; /* Extremely small for luxury feel */
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #D97DA5;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  .banner-main-title {
+    font-size: 24px; /* Smaller main title */
+    font-weight: 700;
+    line-height: 1.2;
+    color: #51555A;
+    margin-bottom: 15px;
+  }
+
+  .banner-description {
+    font-size: 0.75rem; /* Reduced description size */
+    color: #51555A;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    font-weight: 300;
+    max-width: 85%;
+  }
+
+  .btn-boutique {
+    font-size: 9px; /* Smallest button text */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: #51555A;
+    color: #fff;
+    padding: 12px 25px;
+    display: inline-block;
+    transition: 0.3s;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* --- MOBILE RESPONSIVE --- */
+
+  @media (max-width: 767px) {
+    .divider-product-discount-area {
+      padding: 50px 0;
+      min-height: auto;
+      background-attachment: scroll; /* Critical for mobile performance */
+    }
+      .divider-style2-wrap{
+    margin-top: 10%;
+  }
+    .accessory-banner-content {
+      padding: 25px 20px;
+      text-align: center;
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    .banner-main-title {
+      font-size: 1rem; /* Scaled down for mobile */
+      margin-bottom: 10px;
+    }
+
+    .banner-description {
+      font-size: 10px; /* Smallest readable description */
+      max-width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .banner-sub-title {
+      font-size: 8px !important;
+      letter-spacing: 2px;
+    }
+
+    .btn-boutique {
+      padding: 10px 20px;
+      width: 100%; /* Easy to click on touch screens */
+    }
+  }
+
+</style>
 
 
-
-<!--== Start Product Area Wrapper ==-->
 <section class="product-area">
-    <div class="container pt-95 pt-lg-70">
+    <div class="container pt-95 pt-lg-70 pb-lg-60">
         <div class="row">
             <div class="col-sm-8 m-auto">
-                <div class="section-title text-center">
-                    <h2 class="title">Featured Products</h2>
+                <div class="section-title text-center mb-1">
+                    <h2 class="title" style="text-transform: capitalize; font-size: 20px; letter-spacing: 1px;">Featured Products</h2>
                     <div class="desc">
-                        <p>Add our Featured Products to your weekly lineup</p>
+                        <p style="font-size: 0.8rem; color: #51555a; font-weight: 400;">Add our Featured Products to your weekly lineup</p>
                     </div>
                 </div>
             </div>
@@ -177,7 +470,6 @@
                     @if($featuredProducts)
                         @foreach ($featuredProducts as $productItem)
                             <div class="item">
-                                <!--== Start Shop Item ==-->
                                 <div class="product-item">
                                     <div class="inner-content">
                                         <div class="product-thumb">
@@ -189,47 +481,53 @@
                                                     @endif
                                                 </a>
                                             @endif
-                                            <!-- Fix here: change $product to $productItem -->
+                                            
                                             <livewire:frontend.indexwish :product="$productItem"/>
-                                            <div class="white-bg">                           
+                                            
+                                            <div class="white-bg">                            
                                                 <livewire:frontend.cart.add-to-cart :product="$productItem"/>
                                             </div>
-                                            <ul class="product-flag">
-                                                <li class="new">
-                                                    @if ($productItem->quantity > 0)
+
+                                           <ul class="product-flag">
+                                                <li class="new" style="font-size: 10px;">
+                                                    @if ($product->quantity > 0)
                                                         <span>In Stock</span>
                                                     @else
                                                         Out of Stock
                                                     @endif
                                                 </li>
-                                                @if($productItem->original_price)
+                                                @if($product->original_price)
                                                     @php
-                                                        $discount = (($productItem->original_price - $productItem->selling_price) / $productItem->original_price ) * 100;
+                                                        $discount = (($product->original_price - $product->selling_price) / $product->original_price ) * 100;
                                                     @endphp
-                                                    <li class="discount">-{{ round($discount , 0) }}%</li>
+                                                    <li class="discount" style="font-size: 9px;">-{{ round($discount , 0) }}%</li>
                                                 @endif
                                             </ul>
                                         </div>
-                                        <div class="product-desc">
-                                            <div class="product-info">
-                                                <h4 class="title"><a href="single-product.html">{{ $productItem->small_description }}</a></h4>
+
+                                        <div class="product-desc" style="padding: 10px 0;">
+                                            <div class="product-info text-center">
+                                                <h4 class="title" style="margin-bottom: 5px;">
+                                                    <a href="{{ url('/collections/'.$productItem->category->slug.'/'.$productItem->slug) }}" 
+                                                       style="color:#51555a; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.3px;">
+                                                       {{ $productItem->name }}
+                                                    </a>
+                                                </h4>
                                                 <div class="prices">
                                                     @if($productItem->original_price)
-                                                        <span class="price-old">${{ $productItem->original_price }}</span>
+                                                        <span class="price-old" style="font-size: 10px; color: #999; text-decoration: line-through; margin-right: 5px;">
+                                                            €{{ $productItem->original_price }}
+                                                        </span>
                                                     @endif
-                                                    <span class="price">${{ $productItem->selling_price }}</span>
+                                                    <span class="price" style="font-size: 12px; font-weight: 600; color: #D97DA5;">
+                                                        €{{ $productItem->selling_price }}
+                                                    </span>
                                                 </div>
-                                                @if ($productItem->quantity > 0)
-                                                    <span class="product__badge product__badge_success">In Stock</span>
-                                                @else
-                                                    <span class="product__badge">Out of Stock</span>
-                                                @endif
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!--== End Shop Item ==-->
-                            </div>
+                                </div>
                         @endforeach
                     @endif
                 </div>
@@ -237,18 +535,16 @@
         </div>
     </div>
 </section>
-<!--== End Product Area Wrapper ==-->
-
 
  <!--== Start Testimonial Area Wrapper ==-->
- {{-- <section class="testimonial-area">
+ <section class="testimonial-area">
     <div class="container pt-110 pt-lg-70">
       <div class="row">
         <div class="col-sm-8 m-auto">
           <div class="section-title text-center">
             <h2 class="title">Client Testimonials</h2>
             <div class="desc">
-              <p>What our happy customers says !</p>
+              <p style="font-size: 0.8rem; color: #51555a; font-weight: 400;">What our happy customers says !</p>
             </div>
           </div>
         </div>
@@ -291,7 +587,7 @@
         </div>
       </div>
     </div>
-  </section> --}}
+  </section>
   <!--== End Testimonial Area Wrapper ==-->
 
 
@@ -305,7 +601,7 @@
               <div class="section-title text-center">
                 <h2 class="title">Latest News</h2>
                 <div class="desc">
-                  <p>Present posts in a best way to highlight interesting moments of your blog.</p>
+          <p style="font-size: 0.8rem; color: #51555a; font-weight: 400;">Present posts in a best way to highlight interesting moments of your blog.</p>
                 </div>
               </div>
             </div>
@@ -319,15 +615,10 @@
                   <div class="post-item">
                     <div class="inner-content">
                       <div class="thumb">
-                        <a href="blog.html"><img src="{{ asset($blog->image) }}" class="img" alt="Image-HasTech"></a>
+                                          <a href="{{ url('blog/details/'. $blog->id) }}"><img src="{{ asset($blog->image)}}" class="img" alt="Image-HasTech"></a>
                       </div>
                       <div class="content">
-                        <h4 class="title"><a href="single-blog.html">{{ words_limit($blog->description, 10) }}</a></h4>
-                        <div class="meta">
-                          <span>Posted by</span>
-                          <a class="author" href="blog.html">{{ $blog->by }}</a>
-                          <a class="date" href="blog.html">{{ $blog->date }}</a>
-                        </div>
+                        <h4 class="title"><a href="{{ url('blog/details/'. $blog->id) }}">{{ words_limit($blog->description, 10) }}</a></h4>
                       </div>
                     </div>
                   </div>
@@ -384,8 +675,16 @@
     }
 })
   </script>
-  <style scoped>
-
+  <style>
+.banner-overlay-text h6 , .banner-overlay-text h4{
+  color: white;
+}
+.testimonial-area{
+  background: #fbfbfb;
+}
+.firstActiveItem .testimonial-item .testi-inner-content .testi-content {
+  background: white;
+}
   </style>
 
 @endsection

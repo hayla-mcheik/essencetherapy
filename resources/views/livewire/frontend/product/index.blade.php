@@ -9,7 +9,7 @@
               <div class="shop-sidebar-wrapper">
                 <!--== Start Sidebar Item ==-->
                 <div class="sidebar-item">
-                  <h4 class="sidebar-title"><a href="shop-left-sidebar.html">All Categories</a></h4>
+                  <h4 class="sidebar-title"><a href="{{ url('/collections/') }}">All Categories</a></h4>
                   <div class="sidebar-body">
                     <div class="category-sub-menu">
                       <ul>
@@ -122,52 +122,63 @@
                         @forelse ($products as $productItem)
                       <div class="col-sm-6 col-md-4">
                         <!--== Start Shop Item ==-->
-                        <div class="product-item">
-                          <div class="inner-content">
-                            <div class="product-thumb">
-                    
-                                @if($productItem->productImages->count() > 0)    
-                                <a href="{{ url('/collections/'.$productItem->category->slug.'/'.$productItem->slug) }}">
-                                    <img src="{{ asset($productItem->productImages[0]->image) }}" alt="{{ $productItem->name }}">
-                                    @if($productItem->productImages->count() > 1)
-                                        <img class="second-image" src="{{ asset($productItem->productImages[1]->image) }}" alt="{{ $productItem->name }}">
-                                    @endif
-                                </a>
-                            @endif
+                                          <div class="product-item">
+                                    <div class="inner-content">
+                                        <div class="product-thumb">
+                                            @if($productItem->productImages->count() > 0)    
+                                                <a href="{{ url('/collections/'.$productItem->category->slug.'/'.$productItem->slug) }}">
+                                                    <img src="{{ asset($productItem->productImages[0]->image) }}" alt="{{ $productItem->name }}">
+                                                    @if($productItem->productImages->count() > 1)
+                                                        <img class="second-image" src="{{ asset($productItem->productImages[1]->image) }}" alt="{{ $productItem->name }}">
+                                                    @endif
+                                                </a>
+                                            @endif
+                                            
+                                            <livewire:frontend.indexwish :product="$productItem"/>
+                                            
+                                            <div class="white-bg">                            
+                                                <livewire:frontend.cart.add-to-cart :product="$productItem"/>
+                                            </div>
 
-                              <div class="product-action">
-                                <div class="addto-wrap">
-                                  <a class="add-wishlist" title="Add to wishlist" wire:click="addToWishList({{ $productItem->id }})" style="background-color:{{$IsInWishlist ? '#f6f6f6' : '#f6f6f6' }};">
-                                    <i class="icon-heart icon {{$IsInWishlist ? 'fa fa-heart' : 'icon-heart' }}" style="color:{{$IsInWishlist ? '#ec6b81' : '#000' }};" ></i>  
-                                  </a>
+                                           <ul class="product-flag">
+                                                <li class="new" style="font-size: 10px;">
+                                                    @if ($product->quantity > 0)
+                                                        <span>In Stock</span>
+                                                    @else
+                                                        Out of Stock
+                                                    @endif
+                                                </li>
+                                                @if($product->original_price)
+                                                    @php
+                                                        $discount = (($product->original_price - $product->selling_price) / $product->original_price ) * 100;
+                                                    @endphp
+                                                    <li class="discount" style="font-size: 9px;">-{{ round($discount , 0) }}%</li>
+                                                @endif
+                                            </ul>
+                                        </div>
+
+                                        <div class="product-desc" style="padding: 10px 0;">
+                                            <div class="product-info text-center">
+                                                <h4 class="title" style="margin-bottom: 5px;">
+                                                    <a href="{{ url('/collections/'.$productItem->category->slug.'/'.$productItem->slug) }}" 
+                                                       style="color:#51555a; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.3px;">
+                                                       {{ $productItem->name }}
+                                                    </a>
+                                                </h4>
+                                                <div class="prices">
+                                                    @if($productItem->original_price)
+                                                        <span class="price-old" style="font-size: 10px; color: #999; text-decoration: line-through; margin-right: 5px;">
+                                                            €{{ $productItem->original_price }}
+                                                        </span>
+                                                    @endif
+                                                    <span class="price" style="font-size: 12px; font-weight: 600; color: #D97DA5;">
+                                                        €{{ $productItem->selling_price }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                              </div>
-                              <ul class="product-flag">
-                                <li class="new">
-                                  @if ($productItem->quantity > 0)
-                                  <span>In Stock</span>
-                              @else
-                                Out of Stock
-                              @endif</li>
-                                <li class="discount">-10%</li>
-                              </ul>
-                            </div>
-                            <div class="product-desc">
-                                <div class="product-info">
-                                  <h4 class="title"><a href="{{ url('/collections/'.$productItem->category->slug.'/'.$productItem->slug) }}">{{ $productItem->small_description }}</a></h4>
-                       
-                                <div class="prices mb-2">
-                                    @if($productItem->original_price)
-                                        <span class="price-old">${{ $productItem->original_price }}</span>
-                                    @endif
-                                    <span class="price">${{ $productItem->selling_price }}</span>
-                                </div>
-                   <a class="btn-product-add" wire:click="addToCart({{ $productItem->id }})">Add to cart</a>
-                                </div>
-                
-                      
-                              </div>                          </div>
-                        </div>
                         <!--== End Shop Item ==-->
                       </div>
          @empty
