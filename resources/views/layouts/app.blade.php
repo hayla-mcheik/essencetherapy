@@ -47,7 +47,20 @@
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
     <!-- Custom CSS for Enhanced Footer Design -->
-    <style>
+ 
+
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @livewireStyles
+       <style>
         /* Enhanced Footer Styles */
         .footer-connect-section {
             background: var(--logo-pink-dark) ;
@@ -224,7 +237,7 @@
         .connect-description{
             font-size: 12px;
         }
-        
+    }
         @media (max-width: 576px) {
             .social-icons-enhanced {
                 flex-wrap: wrap;
@@ -236,10 +249,10 @@
             }
         }
 
-        /* Shipping Update Popup Styles */
+ 
 #shippingModal .modal-content {
     border: none;
-    border-radius: 4px; /* Clean edges like Nevo */
+    border-radius: 4px; 
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
 }
 
@@ -311,18 +324,6 @@
     font-size: 20px;
 }
     </style>
-
-    <!--[if lt IE 9]>
-    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
-<!-- Default theme -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    @livewireStyles
 </head>
 <body>
 <!--wrapper start-->
