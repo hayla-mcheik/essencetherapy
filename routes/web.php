@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail; // Import the Mail facade
-
+use Illuminate\Support\Facades\Artisan;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -149,4 +149,8 @@ Route::get('sliders/{slider}/delete','destroy');
     });
 Route::get('/brands',App\Livewire\Admin\Brand\Index::class);
 
+});
+Route::get('/run-link', function () {
+    Artisan::call('storage:link');
+    return "Storage link created successfully!";
 });
