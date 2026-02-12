@@ -1,8 +1,8 @@
 
 
 RewriteEngine on
-RewriteCond %{HTTP_HOST} ^rshome.shop [NC,OR]
-RewriteCond %{HTTP_HOST} ^www.rshome.shop [NC]
+RewriteCond %{HTTP_HOST} ^talyscollection.com [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.talyscollection.com [NC]
 RewriteRule ^(.*)$ public/$1 [L]
 
 # BEGIN cPanel-generated php ini directives, do not edit
