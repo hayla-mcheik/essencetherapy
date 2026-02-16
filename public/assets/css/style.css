@@ -8166,3 +8166,7 @@ background-color: #fff;
     .bg-light{
       background-color: var(--logo-pink-light);
     }
+    .btn-danger{
+        background-color: var(--logo-pink-dark) !important;
+        color: white !important;
+    }

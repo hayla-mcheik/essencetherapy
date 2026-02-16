@@ -29,6 +29,11 @@
   .sidebar .nav .nav-item.active{
     background:#e9e9e9;
   }
+    .btn-danger{
+        background-color: #D97DA5 !important;
+        border-color: #D97DA5 !important;
+        color: white !important;
+    }
   </style>
 
     <!-- Scripts -->

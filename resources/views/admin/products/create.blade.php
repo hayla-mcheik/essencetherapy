@@ -30,9 +30,13 @@
 
                 <form action="{{ url('admin/products') }}" method="POST" enctype="multipart/form-data" id="productForm">
                     @csrf
+
+                    <!-- Hidden input to store active tab -->
+                    <input type="hidden" name="active_tab" id="activeTab" value="{{ old('active_tab', 'home-tab') }}">
+
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
+                            <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
                                 Home
                             </button>
                         </li>
@@ -54,7 +58,8 @@
                     </ul>
 
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade border p-3 show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                        <!-- Home Tab -->
+                        <div class="tab-pane fade border p-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                             <div class="mb-3">
                                 <label>Category</label>
                                 <select name="category_id" class="form-control">
@@ -87,6 +92,7 @@
                             </div>
                         </div>
 
+                        <!-- SEO Tags Tab -->
                         <div class="tab-pane fade border p-3" id="seotag-tab-pane" role="tabpanel" aria-labelledby="seotag-tab" tabindex="0">
                             <div class="mb-3">
                                 <label>Meta Title</label>
@@ -104,6 +110,7 @@
                             </div>
                         </div>
 
+                        <!-- Details Tab -->
                         <div class="tab-pane fade border p-3" id="details-tab-pane" role="tabpanel" aria-labelledby="details-tab" tabindex="0">
                             <div class="row">
                                 <div class="col-md-4">
@@ -147,6 +154,7 @@
                             </div>
                         </div>
 
+                        <!-- Images Tab -->
                         <div class="tab-pane fade border p-3" id="image-tab-pane" role="tabpanel" aria-labelledby="image-tab" tabindex="0">
                             <div class="alert alert-info">
                                 <strong><i class="fas fa-info-circle"></i> Important:</strong> You must upload at least 2 images - front view and back view of the product are required.
@@ -205,6 +213,25 @@
                         </button>
                     </div>
                 </form>
+
+                <!-- Preview of uploaded images if there were errors -->
+                @if(old('image_previews') && is_array(old('image_previews')))
+                <div class="mt-4">
+                    <h5>Previously Selected Images:</h5>
+                    <div class="row">
+                        @foreach(old('image_previews') as $index => $preview)
+                        <div class="col-md-3 mb-3">
+                            <div class="card">
+                                <img src="data:image/jpeg;base64,{{ $preview }}" class="card-img-top" style="height: 150px; object-fit: cover;">
+                                <div class="card-body p-2">
+                                    <p class="card-text small">Image {{ $index + 1 }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -223,11 +250,69 @@ document.addEventListener('DOMContentLoaded', function() {
     const requirementMessage = document.getElementById('requirementMessage');
     const submitBtn = document.getElementById('submitBtn');
     const form = document.getElementById('productForm');
-    const imageTab = document.querySelector('#image-tab');
+    const activeTabInput = document.getElementById('activeTab');
+    
+    // Get all tab elements
+    const homeTab = document.getElementById('home-tab');
+    const seoTab = document.getElementById('seotag-tab');
+    const detailsTab = document.getElementById('details-tab');
+    const imagesTab = document.getElementById('image-tab');
+    const tabButtons = [homeTab, seoTab, detailsTab, imagesTab];
+
+    // Store all selected files
+    let allSelectedFiles = [];
+    let uploadedImages = [];
+
+    // Function to save current tab
+    function saveActiveTab(tabId) {
+        activeTabInput.value = tabId;
+        sessionStorage.setItem('activeProductTab', tabId);
+    }
+
+    // Function to activate tab based on stored value
+    function activateStoredTab() {
+        const storedTab = sessionStorage.getItem('activeProductTab') || 'home-tab';
+        const tabToActivate = document.getElementById(storedTab);
+        
+        if (tabToActivate) {
+            const tab = new bootstrap.Tab(tabToActivate);
+            tab.show();
+            activeTabInput.value = storedTab;
+        }
+    }
+
+    // Add click handlers to all tabs
+    tabButtons.forEach(tabButton => {
+        tabButton.addEventListener('click', function() {
+            saveActiveTab(this.id);
+        });
+    });
+
+    // Check for image validation errors and switch to images tab if needed
+    @if($errors->has('image') || $errors->has('image.*'))
+        const imagesTabBtn = document.getElementById('image-tab');
+        if (imagesTabBtn) {
+            const tab = new bootstrap.Tab(imagesTabBtn);
+            tab.show();
+            activeTabInput.value = 'image-tab';
+            sessionStorage.setItem('activeProductTab', 'image-tab');
+        }
+    @endif
+
+    // Function to update the file input with all selected files
+    function updateFileInput() {
+        const dataTransfer = new DataTransfer();
+        
+        allSelectedFiles.forEach(file => {
+            dataTransfer.items.add(file);
+        });
+        
+        productImages.files = dataTransfer.files;
+    }
 
     // Function to update image count and progress
-    function updateImageCount(files) {
-        const count = files.length;
+    function updateImageCount() {
+        const count = allSelectedFiles.length;
         
         // Update badge
         imageCountBadge.textContent = `${count} image${count !== 1 ? 's' : ''} selected`;
@@ -251,7 +336,47 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to create image preview
+    // Function to remove a specific image
+    function removeImage(index) {
+        allSelectedFiles.splice(index, 1);
+        uploadedImages.splice(index, 1);
+        
+        // Refresh the preview
+        refreshImagePreview();
+        
+        // Update file input
+        updateFileInput();
+        
+        // Update count
+        updateImageCount();
+        
+        // Store in sessionStorage
+        sessionStorage.setItem('imageCount', allSelectedFiles.length);
+    }
+
+    // Function to refresh all image previews
+    async function refreshImagePreview() {
+        imagePreview.innerHTML = '';
+        
+        for (let i = 0; i < allSelectedFiles.length; i++) {
+            const preview = await createImagePreview(allSelectedFiles[i], i);
+            if (preview) {
+                imagePreview.appendChild(preview);
+            }
+        }
+    }
+
+    // Function to convert file to base64
+    function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = error => reject(error);
+        });
+    }
+
+    // Function to create image preview with remove button
     function createImagePreview(file, index) {
         return new Promise((resolve) => {
             if (file.type.match('image.*')) {
@@ -260,6 +385,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 reader.onload = function(e) {
                     const col = document.createElement('div');
                     col.className = 'col-md-3 mb-3';
+                    col.dataset.index = index;
                     
                     const card = document.createElement('div');
                     card.className = 'card h-100';
@@ -278,8 +404,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     badge.textContent = `#${index + 1}`;
                     badge.style.fontSize = '0.8em';
                     
+                    const removeBtn = document.createElement('button');
+                    removeBtn.type = 'button';
+                    removeBtn.className = 'btn btn-danger btn-sm position-absolute top-0 end-0 m-1';
+                    removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                    removeBtn.style.zIndex = '10';
+                    removeBtn.onclick = function(e) {
+                        e.preventDefault();
+                        removeImage(index);
+                    };
+                    
                     imgContainer.appendChild(img);
                     imgContainer.appendChild(badge);
+                    imgContainer.appendChild(removeBtn);
                     
                     const cardBody = document.createElement('div');
                     cardBody.className = 'card-body p-2';
@@ -310,70 +447,117 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Handle image selection
+    // Handle new image selection (APPEND instead of REPLACE)
     productImages.addEventListener('change', async function() {
-        // Clear previous previews
-        imagePreview.innerHTML = '';
+        const newFiles = Array.from(this.files);
         
-        const files = this.files;
+        // Add new files to the cumulative list
+        allSelectedFiles = [...allSelectedFiles, ...newFiles];
+        
+        // Clear the file input to allow re-selecting the same files
+        this.value = '';
+        
+        // Update file input with all files
+        updateFileInput();
         
         // Update count and progress
-        updateImageCount(files);
+        updateImageCount();
         
-        // Create previews for each image
-        if (files.length > 0) {
-            for (let i = 0; i < files.length; i++) {
-                const preview = await createImagePreview(files[i], i);
-                if (preview) {
-                    imagePreview.appendChild(preview);
-                }
-            }
+        // Create previews for all files (refresh all)
+        await refreshImagePreview();
+        
+        // Store base64 for persistence
+        uploadedImages = [];
+        for (let i = 0; i < allSelectedFiles.length; i++) {
+            const base64 = await fileToBase64(allSelectedFiles[i]);
+            uploadedImages.push(base64);
         }
+        
+        // Store in sessionStorage for persistence
+        sessionStorage.setItem('uploadedImages', JSON.stringify(uploadedImages));
+        sessionStorage.setItem('imageCount', allSelectedFiles.length);
+        
+        // Make sure we stay on images tab
+        const tab = new bootstrap.Tab(imagesTab);
+        tab.show();
+        saveActiveTab('image-tab');
     });
 
     // Form validation before submit
     form.addEventListener('submit', function(e) {
-        const files = productImages.files;
-        
-        if (files.length < 2) {
+        if (allSelectedFiles.length < 2) {
             e.preventDefault();
+            
+            // Switch to images tab
+            const tab = new bootstrap.Tab(imagesTab);
+            tab.show();
+            saveActiveTab('image-tab');
             
             // Show alert
             Swal.fire({
                 icon: 'error',
                 title: 'Images Required',
                 html: `Please upload at least 2 images (front and back views).<br><br>
-                       <strong>Currently selected:</strong> ${files.length} image${files.length !== 1 ? 's' : ''}`,
+                       <strong>Currently selected:</strong> ${allSelectedFiles.length} image${allSelectedFiles.length !== 1 ? 's' : ''}`,
                 confirmButtonText: 'OK',
                 confirmButtonColor: '#3085d6',
-            }).then((result) => {
-                // Switch to images tab after user clicks OK
-                if (result.isConfirmed) {
-                    const tab = new bootstrap.Tab(imageTab);
-                    tab.show();
-                    productImages.focus();
-                }
             });
+        } else {
+            // Store active tab before submit
+            saveActiveTab(activeTabInput.value);
+            
+            // Store image data in session for persistence after validation error
+            if (uploadedImages.length > 0) {
+                sessionStorage.setItem('uploadedImages', JSON.stringify(uploadedImages));
+            }
         }
     });
 
-    // Clear previews when form is reset
+    // Clear previews and session when form is reset
     form.addEventListener('reset', function() {
+        allSelectedFiles = [];
+        uploadedImages = [];
         imagePreview.innerHTML = '';
         imageCountBadge.textContent = '0 images selected';
         imageCountBadge.className = 'badge bg-secondary';
         imageProgressBar.style.width = '0%';
         imageProgressBar.className = 'progress-bar';
         imageRequirements.classList.add('d-none');
-        submitBtn.disabled = false;
+        submitBtn.disabled = true; // Disable submit because minimum images not met
+        
+        // Clear file input
+        productImages.value = '';
+        updateFileInput();
+        
+        // Clear session storage
+        sessionStorage.removeItem('uploadedImages');
+        sessionStorage.removeItem('imageCount');
+        sessionStorage.removeItem('activeProductTab');
+        
+        // Reset to home tab
+        const tab = new bootstrap.Tab(homeTab);
+        tab.show();
+        saveActiveTab('home-tab');
     });
 
-    // Initialize with any existing validation errors
-    @if($errors->has('image') || $errors->has('image.*'))
-        // Switch to images tab if there are image errors
-        const tab = new bootstrap.Tab(imageTab);
-        tab.show();
-    @endif
+    // Restore previously selected images if any (from session storage)
+    const storedImageCount = sessionStorage.getItem('imageCount');
+    if (storedImageCount && parseInt(storedImageCount) > 0) {
+        // Update UI to show count
+        imageCountBadge.textContent = `${storedImageCount} images selected`;
+        imageCountBadge.className = 'badge bg-success';
+        imageProgressBar.style.width = '100%';
+        imageProgressBar.className = 'progress-bar bg-success';
+        submitBtn.disabled = false;
+    }
+
+    // Activate the last active tab on page load
+    activateStoredTab();
+
+    // Handle browser back/forward navigation
+    window.addEventListener('popstate', function() {
+        activateStoredTab();
+    });
 });
 </script>
 
@@ -401,6 +585,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     .nav-link.active {
         font-weight: 600;
+        background-color: #f8f9fa !important;
+        border-bottom-color: transparent !important;
+    }
+    
+    /* Tab transition smoothness */
+    .tab-pane {
+        transition: opacity 0.15s linear;
     }
 </style>
+
 @endsection
