@@ -1,25 +1,24 @@
 <div>
         <!--== Start Page Header Area Wrapper ==-->
-        <div class="page-header-area bg-img" data-bg-img="{{ asset('assets/img/bg-02.webp') }}">
-
-            <div class="container">
-              <div class="row">
-                <div class="col-12 text-center">
-                  <div class="page-header-content">
+<div class="page-header-area bg-img" data-bg-img="{{ asset('assets/img/bg-02.webp') }}">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="page-header-content">
                     <nav class="breadcrumb-area">
-                      <ul class="breadcrumb">
-                        <li><a href="{{url('/')}}">Home</a></li>
-                        <li class="breadcrumb-sep"><i class="fa fa-angle-right"></i></li>
-                        <li><a href="#" id="shop-link">Products</a></li>
-                        <li class="breadcrumb-sep"><i class="fa fa-angle-right"></i></li>
-                        <li>Product Single</li>
-                      </ul>
+                        <ul class="breadcrumb">
+                            <li><a href="{{url('/')}}">Home</a></li>
+                            <li class="breadcrumb-sep"><i class="fa fa-angle-right"></i></li>
+                            <li><a href="#" id="shop-link">Products</a></li>
+                            <li class="breadcrumb-sep"><i class="fa fa-angle-right"></i></li>
+                            <li>{{ $product->name }}</li>
+                        </ul>
                     </nav>
-                  </div>
                 </div>
-              </div>
             </div>
-          </div>
+        </div>
+    </div>
+</div>
           <!--== End Page Header Area Wrapper ==-->
       
 
