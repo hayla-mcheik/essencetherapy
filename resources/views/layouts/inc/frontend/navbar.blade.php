@@ -267,11 +267,32 @@
   </header>
   <!--== End Header Wrapper ==-->
 <style>
+  /* 1. Create an invisible bridge so the hover doesn't break */
+.has-dropdown {
+    position: relative;
+    padding-bottom: 20px; /* Provides space for the bridge */
+    margin-bottom: -20px;
+}
+
+.boutique-dropdown::before {
+    content: "";
+    position: absolute;
+    top: -25px; /* Adjust this based on your header height */
+    left: 0;
+    width: 100%;
+    height: 25px;
+    background: transparent;
+}
+
+/* 2. Ensure the dropdown stays open while hovering the menu itself */
+.has-dropdown:hover .boutique-dropdown {
+    display: block !important;
+}
     /* 1. New Classic Dropdown Styling */
   .boutique-dropdown {
     position: absolute;
     top: 100%;
-    left: 42%;
+    left: 0;
     background: #fff;
     min-width: 200px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);

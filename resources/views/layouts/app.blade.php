@@ -496,7 +496,7 @@
      
     </div>
 
-    <div class="modal fade" id="shippingModal" tabindex="-1" aria-hidden="true">
+    {{-- <div class="modal fade" id="shippingModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="text-end p-3">
@@ -527,7 +527,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!--=== Modernizr Min Js ===-->
 <script src="{{ asset('assets/js/modernizr.js')}}"></script>
@@ -586,46 +586,46 @@ if (mobileDropTrigger) {
         alertify.notify(event.detail.text , event.detail.type);
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        console.log("Checking for Shipping Popup..."); // Check F12 Console for this
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     console.log("Checking for Shipping Popup..."); // Check F12 Console for this
 
-        // 1. Check if we are on the Home Page
-        var isHomePage = window.location.pathname === '/' || 
-                         window.location.pathname === '/index.php' ||
-                         window.location.pathname.endsWith('/');
+    //     // 1. Check if we are on the Home Page
+    //     var isHomePage = window.location.pathname === '/' || 
+    //                      window.location.pathname === '/index.php' ||
+    //                      window.location.pathname.endsWith('/');
 
-        if (isHomePage) {
+    //     if (isHomePage) {
             
-            // 2. Check Session Storage (Clear your cache/incognito to test)
-            if (!sessionStorage.getItem('shownShippingPopup')) {
+    //         // 2. Check Session Storage (Clear your cache/incognito to test)
+    //         if (!sessionStorage.getItem('shownShippingPopup')) {
                 
-                var modalElement = document.getElementById('shippingModal');
+    //             var modalElement = document.getElementById('shippingModal');
                 
-                if (modalElement) {
-                    // Force a delay to ensure Bootstrap is fully loaded
-                    setTimeout(function() {
-                        try {
-                            // Using the modern Bootstrap 5 way
-                            var myModal = new bootstrap.Modal(modalElement);
-                            myModal.show();
-                            sessionStorage.setItem('shownShippingPopup', 'true');
-                            console.log("Popup launched successfully.");
-                        } catch (err) {
-                            console.error("Bootstrap Modal Error: ", err);
-                            // Fallback for Bootstrap 4 if the above fails
-                            if (window.$) {
-                                $(modalElement).modal('show');
-                            }
-                        }
-                    }, 1000); 
-                } else {
-                    console.error("Error: Element #shippingModal not found in HTML.");
-                }
-            } else {
-                console.log("Popup already shown this session.");
-            }
-        }
-    });
+    //             if (modalElement) {
+    //                 // Force a delay to ensure Bootstrap is fully loaded
+    //                 setTimeout(function() {
+    //                     try {
+    //                         // Using the modern Bootstrap 5 way
+    //                         var myModal = new bootstrap.Modal(modalElement);
+    //                         myModal.show();
+    //                         sessionStorage.setItem('shownShippingPopup', 'true');
+    //                         console.log("Popup launched successfully.");
+    //                     } catch (err) {
+    //                         console.error("Bootstrap Modal Error: ", err);
+    //                         // Fallback for Bootstrap 4 if the above fails
+    //                         if (window.$) {
+    //                             $(modalElement).modal('show');
+    //                         }
+    //                     }
+    //                 }, 1000); 
+    //             } else {
+    //                 console.error("Error: Element #shippingModal not found in HTML.");
+    //             }
+    //         } else {
+    //             console.log("Popup already shown this session.");
+    //         }
+    //     }
+    // });
 </script>
     @yield('script')
     @livewireScripts
