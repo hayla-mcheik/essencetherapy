@@ -134,7 +134,7 @@
                                                 </a>
                                             @endif
                                             
-                                            <livewire:frontend.indexwish :product="$productItem"/>
+                                            {{-- <livewire:frontend.indexwish :product="$productItem"/> --}}
                                             
                                             <div class="white-bg">                            
                                                 <livewire:frontend.cart.add-to-cart :product="$productItem"/>

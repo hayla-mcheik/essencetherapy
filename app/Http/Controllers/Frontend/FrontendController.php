@@ -11,6 +11,7 @@ use App\Models\Blogs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactFormMail;
+use App\Models\Banner;
 use App\Models\Subscriber;
 
 class FrontendController extends Controller
@@ -25,7 +26,8 @@ class FrontendController extends Controller
         $reviews= ReviewsModel::where('status','0')->get();
         $threecategories = Category::where('status','0')->take(3)->get();
         $blogs = Blogs::all();
-        return view('frontend.index',compact('sliders','trendingProducts','newArrivalsProducts','featuredProducts','categories','reviews','threecategories','blogs'));
+$banner = Banner::first();
+        return view('frontend.index',compact('sliders','trendingProducts','newArrivalsProducts','featuredProducts','categories','reviews','threecategories','blogs','banner'));
     }
 
 

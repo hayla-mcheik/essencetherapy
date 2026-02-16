@@ -1540,7 +1540,7 @@ section .container-fluid {
   color: #fff;
 }
 .header-area .header-top .contact-email span a:hover {
-  color: var(--logo-pink-dark);
+  color: white;
 }
 .header-area .header-top p {
   color: #fff;
@@ -1577,7 +1577,7 @@ section .container-fluid {
   vertical-align: -2px;
 }
 .header-area .header-top .theme-setting .dropdown-btn:hover {
-  color: var(--logo-pink-dark);
+  color: white;
 }
 .header-area .header-top .theme-setting .dropdown-content {
   -webkit-box-shadow: 0 3px 25.5px 4.5px rgba(0, 0, 0, 0.06);
@@ -1661,7 +1661,7 @@ section .container-fluid {
   vertical-align: -2px;
 }
 .header-area .header-top .theme-currency .dropdown-btn:hover {
-  color: var(--logo-pink-dark);
+  color: white;
 }
 .header-area .header-top .theme-currency .dropdown-content {
   -webkit-box-shadow: 0 3px 25.5px 4.5px rgba(0, 0, 0, 0.06);

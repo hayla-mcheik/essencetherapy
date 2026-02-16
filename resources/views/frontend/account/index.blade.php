@@ -46,7 +46,7 @@
                 </div>
               </div>
 
-              <div class="col-lg-4 col-sm-6">
+              {{-- <div class="col-lg-4 col-sm-6">
                 <div class="account-item">
                   <div class="account-inner mb-30">
                     <a href="{{ url('wishlist') }}">
@@ -55,7 +55,7 @@
                     </a>
                   </div>
                 </div>
-              </div>
+              </div> --}}
               <div class="col-lg-4 col-sm-6">
                 <div class="account-item">
                   <div class="account-inner mb-30">

@@ -5,18 +5,48 @@
 
 
 <section class="home-slider-area pt-0 p-0">
-    <div class="container-fluid p-0 pt-2 pb-2"> <div class="row g-0 align-items-center"> <div class="col-lg-3 d-none d-lg-block">
-                <div class="featured-banner-left" style="position: relative; overflow: hidden; height: 70vh;">
-                    <img src="{{ asset('assets/img/image-left.jpg') }}" 
-                         alt="Featured Collection" 
-                         style="width: 100%; height: 100%; object-fit: cover;">
-                    
-                    <div class="banner-overlay-text" style="position: absolute; bottom: 30px; left: 20px; color: #fff;">
-                        <h6 style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">New Arrivals</h6>
-                        <h4 style="font-size: 18px; font-weight: 600;">The Pearl <br> Collection</h4>
-                    </div>
-                </div>
+    <div class="container-fluid p-0 pt-2 pb-2"> <div class="row g-0 align-items-center">
+<div class="col-lg-3 d-none d-lg-block">
+    <div class="featured-banner-left" style="position: relative; overflow: hidden; height: 70vh;">
+        @if(isset($banner) && $banner && $banner->image)
+            <img src="{{ asset($banner->image) }}"
+                 alt="{{ $banner->title ?? 'Featured Collection' }}" 
+                 style="width: 100%; height: 100%; object-fit: cover;">
+            
+            <div class="banner-overlay-text" style="position: absolute; bottom: 30px; left: 20px; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">
+                @if($banner->subtitle)
+                    <h6 style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;">
+                        {{ $banner->subtitle }}
+                    </h6>
+                @else
+                    <h6 style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;">
+                        New Arrivals
+                    </h6>
+                @endif
+                
+                @if($banner->title)
+                    <h4 style="font-size: 18px; font-weight: 600; line-height: 1.4;">
+                        {!! nl2br(e($banner->title)) !!}
+                    </h4>
+                @else
+                    <h4 style="font-size: 18px; font-weight: 600; line-height: 1.4;">
+                        The Pearl <br> Collection
+                    </h4>
+                @endif
             </div>
+        @else
+            <!-- Default fallback banner -->
+            <img src="{{ asset('assets/img/image-left.jpg') }}" 
+                 alt="Default Banner" 
+                 style="width: 100%; height: 100%; object-fit: cover;">
+            
+            <div class="banner-overlay-text" style="position: absolute; bottom: 30px; left: 20px; color: #fff;">
+                <h6 style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">New Arrivals</h6>
+                <h4 style="font-size: 18px; font-weight: 600;">The Pearl <br> Collection</h4>
+            </div>
+        @endif
+    </div>
+</div>
 
             <div class="col-12 col-lg-9">
                 <div class="swiper-container swiper-pagination-style dots-bg-light home-slider-container default-slider-container" style="height: 70vh;">
@@ -70,7 +100,7 @@
     <div class="about-editorial-root py-5 position-relative overflow-hidden">
         
         <div class="art-background-layer">
-            <div class="large-bg-text">prepare to be pampred</div>
+            <div class="large-bg-text">Taly's Collection</div>
             <svg class="botanical-svg" viewBox="0 0 100 100" fill="none">
                 <path d="M10 80C30 80 80 60 90 10M10 80C40 70 80 40 90 10" stroke="#b95c19" stroke-width="0.2" opacity="0.2"/>
             </svg>
@@ -79,13 +109,14 @@
         <div class="wide-content-wrapper px-4 px-md-5 position-relative z-2">
             
             <div class="header-minimal mb-4">
-                <span class="eyebrow">Established 2026</span>
                 <h2 class="display-title mt-2">Tallys Collections Accessories</h2>
  
             </div>
 
             <div class="description-full-width">
-                <p class="editorial-text" v-html="">Welcome to Nails At Home, Dubai’s first beauty home service that was established in 2005 to pamper you in the comfort of your own home. No longer do you have to rush for appointments, deal with traffic or risk exposing your recently manicured nails to the elements. Nails At Home brings the treatment to you. Imagine experiencing the world’s most luxurious spa treatment in your own home! Our teams of specialists are dedicated to offering only the best service, by applying strict hygiene standards on all implements, and using only hand picked beauty care products. We can’t wait to reach you, and give you the treatment you deserve. So give us a call, settle into a comfortable couch, and prepare to be pampered!</p>
+                <p class="editorial-text" v-html="">Taly's Collection was born from a simple idea : style is never complete without the right accessories. We believe jewelry #is the final touch that brings a look together - for both women and men.
+                  Thank you for being part of Taly's Collection - where small details create the boggest glow.
+                </p>
             </div>
 
             <div class="footer-compact mt-5 d-flex align-items-center gap-4">
@@ -94,7 +125,7 @@
             
                 </div>
             
-                <span class="motto mt-4">Nails At Home</span>
+                <span class="motto mt-4">Taly's collection</span>
             </div>
             
         </div>
@@ -129,7 +160,7 @@ defineProps({ about: Object });
 .large-bg-text {
     position: absolute;
     top: 50%;
-    left: 0%;
+    left: 13%;
     transform: translateY(-50%);
     font-family: 'Playfair Display', serif;
     font-size: 10vw;
@@ -227,99 +258,78 @@ defineProps({ about: Object });
 
 <section class="product-area">
     <div class="container pb-lg-60">
-      <div class="row">
-        <div class="col-sm-8 m-auto">
-          <div class="section-title text-center mb-1">
-            <h2 class="title" style=" text-transform: capitalize;">Our Products</h2>
-            <div class="desc">
-              <p style="font-size: 0.8rem; color: #51555a; font-weight: 400;">Add our products to weekly line up</p>
+        <div class="row">
+            <div class="col-sm-8 m-auto">
+                <div class="section-title text-center mb-1">
+                    <h2 class="title" style="text-transform: capitalize;">Our Products</h2>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-            <div class="product-tabs-content-wrap">
-                <ul class="nav mb-25 product-tab-nav" id="pills-tab" role="tablist" style="justify-content: center;">
-                  @foreach ($categories as $category)
-                    <li role="presentation">
-                      <a class="nav-link @if ($loop->first) active @endif" 
-                         id="{{ $category->slug }}-tab" 
-                         data-bs-toggle="pill" 
-                         href="#{{ $category->slug }}" 
-                         role="tab" 
-                         aria-controls="{{ $category->slug }}" 
-                         aria-selected="{{ $loop->first ? 'true' : 'false' }}"
-                         style="font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px;">
-                         {{ $category->name }}
-                      </a>
-                    </li>
-                  @endforeach
-                </ul>
-                <div class="tab-content product-tab-content" id="pills-tabContent">
-                  @foreach ($categories as $category)
-                    <div class="tab-pane fade @if ($loop->first) show active @endif" id="{{ $category->slug }}" role="tabpanel" aria-labelledby="{{ $category->slug }}-tab">
-                      <div class="row">
-                        <div class="col-12">
-                          <div class="product-slider owl-carousel owl-theme">
-                            @foreach ($category->products as $product)
-                              <div class="item">
-                                <div class="product-item">
-                                  <div class="inner-content">
-                                    <div class="product-thumb">
-                                      <a href="{{ url('/collections/'.$product->category->slug.'/'.$product->slug) }}">
-                                        @if($product->productImages->count() > 0)
+        
+        <div class="row">
+            {{-- Using newArrivalsProducts and taking only 6 items --}}
+            @forelse ($newArrivalsProducts->take(6) as $product)
+                <div class="col-6 col-md-4 col-lg-4 mb-30">
+                    <div class="product-item">
+                        <div class="inner-content">
+                            <div class="product-thumb">
+                                <a href="{{ url('/collections/'.$product->category->slug.'/'.$product->slug) }}">
+                                    @if($product->productImages->count() > 0)
                                         <img src="{{ asset($product->productImages[0]->image) }}" alt="product-img">                        
                                         <img class="second-image" src="{{ asset($product->productImages[1]->image ?? $product->productImages[0]->image) }}" alt="product-img">
-                                        @endif 
-                                      </a>
-                                      <livewire:frontend.indexwish :product="$product"/>
-                                      <div class="white-bg">                            
-                                      <livewire:frontend.cart.add-to-cart :product="$product"/>
-                                      </div>
-                                      <ul class="product-flag">
-                                                <li class="new" style="font-size: 10px;">
-                                                    @if ($product->quantity > 0)
-                                                        <span>In Stock</span>
-                                                    @else
-                                                        Out of Stock
-                                                    @endif
-                                                </li>
-                                                @if($product->original_price)
-                                                    @php
-                                                        $discount = (($product->original_price - $product->selling_price) / $product->original_price ) * 100;
-                                                    @endphp
-                                                    <li class="discount" style="font-size: 9px;">-{{ round($discount , 0) }}%</li>
-                                                @endif
-                                            </ul>
-                                    </div>
-                                    <div class="product-desc" style="padding: 10px 0;">
-                                      <div class="product-info text-center">
-                                        <h4 class="title" style="margin-bottom: 5px;">
-                                            <a href="{{ url('/collections/'.$product->category->slug.'/'.$product->slug) }}" 
-                                               style="color:#51555a; font-size: 0.75rem; font-weight: 700;">
-                                               {{ $product->name }}
-                                            </a>
-                                        </h4>
-                                        <div class="prices">
-                                          <span class="price-old" style="font-size: 10px; color: #51555a; text-decoration: line-through; margin-right: 5px;">€{{ $product->original_price }}</span>
-                                          <span class="price" style="font-size: 12px; font-weight: 600; color: #D97DA5;">€{{ $product->selling_price }}</span>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
+                                    @endif 
+                                </a>
+                                
+                                {{-- <livewire:frontend.indexwish :product="$product"/>
+                                 --}}
+                                <div class="white-bg">                            
+                                    <livewire:frontend.cart.add-to-cart :product="$product"/>
                                 </div>
+
+                                <ul class="product-flag">
+                                    <li class="new" style="font-size: 10px;">
+                                        @if ($product->quantity > 0)
+                                            <span>In Stock</span>
+                                        @else
+                                            Out of Stock
+                                        @endif
+                                    </li>
+                                    
+                                    {{-- Correct Discount Calculation --}}
+                                    @if($product->original_price && $product->original_price > $product->selling_price)
+                                        @php
+                                            $discount = (($product->original_price - $product->selling_price) / $product->original_price ) * 100;
+                                        @endphp
+                                        <li class="discount" style="font-size: 9px;">-{{ round($discount, 0) }}%</li>
+                                    @endif
+                                </ul>
+                            </div>
+
+                            <div class="product-desc" style="padding: 10px 0;">
+                                <div class="product-info text-center">
+                                    <h4 class="title" style="margin-bottom: 5px;">
+                                        <a href="{{ url('/collections/'.$product->category->slug.'/'.$product->slug) }}" 
+                                           style="color:#51555a; font-size: 0.75rem; font-weight: 700;">
+                                            {{ $product->name }}
+                                        </a>
+                                    </h4>
+                                    <div class="prices">
+                                        @if($product->original_price > $product->selling_price)
+                                            <span class="price-old" style="font-size: 10px; color: #51555a; text-decoration: line-through; margin-right: 5px;">€{{ $product->original_price }}</span>
+                                        @endif
+                                        <span class="price" style="font-size: 12px; font-weight: 600; color: #D97DA5;">€{{ $product->selling_price }}</span>
+                                    </div>
                                 </div>
-                            @endforeach
-                          </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                  @endforeach
                 </div>
-              </div>
+            @empty
+                <div class="col-12 text-center">
+                    <p>No Products Available</p>
+                </div>
+            @endforelse
         </div>
-      </div>
     </div>
 </section>
 
@@ -458,9 +468,9 @@ defineProps({ about: Object });
             <div class="col-sm-8 m-auto">
                 <div class="section-title text-center mb-1">
                     <h2 class="title" style="text-transform: capitalize; font-size: 20px; letter-spacing: 1px;">Featured Products</h2>
-                    <div class="desc">
+                    {{-- <div class="desc">
                         <p style="font-size: 0.8rem; color: #51555a; font-weight: 400;">Add our Featured Products to your weekly lineup</p>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -482,23 +492,23 @@ defineProps({ about: Object });
                                                 </a>
                                             @endif
                                             
-                                            <livewire:frontend.indexwish :product="$productItem"/>
+                                            {{-- <livewire:frontend.indexwish :product="$productItem"/> --}}
                                             
                                             <div class="white-bg">                            
                                                 <livewire:frontend.cart.add-to-cart :product="$productItem"/>
                                             </div>
 
-                                           <ul class="product-flag">
+                                            <ul class="product-flag">
                                                 <li class="new" style="font-size: 10px;">
-                                                    @if ($product->quantity > 0)
+                                                    @if ($productItem->quantity > 0)
                                                         <span>In Stock</span>
                                                     @else
-                                                        Out of Stock
+                                                        <span style="background: #999;">Out of Stock</span>
                                                     @endif
                                                 </li>
-                                                @if($product->original_price)
+                                                @if($productItem->original_price && $productItem->original_price > $productItem->selling_price)
                                                     @php
-                                                        $discount = (($product->original_price - $product->selling_price) / $product->original_price ) * 100;
+                                                        $discount = (($productItem->original_price - $productItem->selling_price) / $productItem->original_price ) * 100;
                                                     @endphp
                                                     <li class="discount" style="font-size: 9px;">-{{ round($discount , 0) }}%</li>
                                                 @endif
@@ -514,7 +524,7 @@ defineProps({ about: Object });
                                                     </a>
                                                 </h4>
                                                 <div class="prices">
-                                                    @if($productItem->original_price)
+                                                    @if($productItem->original_price && $productItem->original_price > $productItem->selling_price)
                                                         <span class="price-old" style="font-size: 10px; color: #999; text-decoration: line-through; margin-right: 5px;">
                                                             €{{ $productItem->original_price }}
                                                         </span>
@@ -527,7 +537,7 @@ defineProps({ about: Object });
                                         </div>
                                     </div>
                                 </div>
-                                </div>
+                            </div>
                         @endforeach
                     @endif
                 </div>
@@ -535,64 +545,6 @@ defineProps({ about: Object });
         </div>
     </div>
 </section>
-
- <!--== Start Testimonial Area Wrapper ==-->
- <section class="testimonial-area">
-    <div class="container pt-110 pt-lg-70">
-      <div class="row">
-        <div class="col-sm-8 m-auto">
-          <div class="section-title text-center">
-            <h2 class="title">Client Testimonials</h2>
-            <div class="desc">
-              <p style="font-size: 0.8rem; color: #51555a; font-weight: 400;">What our happy customers says !</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="testimonials-slider testi-first-active owl-carousel owl-theme">
-            @if($reviews)
-            @foreach ($reviews as $item )
-            <div class="item">
-              <!--== Start Testimonial Item ==-->
-              <div class="testimonial-item testi-height-style matchHeight">
-                <div class="testi-inner-content">
-                  <div class="testi-author">
-                    <div class="testi-thumb">
-                      <img src="{{ asset($item->image) }}" alt="Image-HasTech" class="img">
-                    </div>
-                    <div class="testi-info">
-                        <span class="name">{{ $item->name }}</span>
-                        <span class="email">{{ $item->title }}</span>
-                    </div>
-                  </div>
-                  <div class="testi-content">
-                    <p>    {{ $item->description }}</p>
-                    <div class="testi-info">
-                      <span class="name">{{ $item->name }}</span>
-                      <span class="email">{{ $item->title }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!--== End Testimonial Item ==-->
-            </div>
-            @endforeach
-            @else
-            <p>No Reviews Available</p>
-@endif
-      
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!--== End Testimonial Area Wrapper ==-->
-
-
-
-
     <!--== Start Blog Area Wrapper ==-->
     <section class="blog-area">
         <div class="container pt-95 pb-100 pt-lg-70 pb-lg-65">
@@ -600,9 +552,9 @@ defineProps({ about: Object });
             <div class="col-sm-8 m-auto">
               <div class="section-title text-center">
                 <h2 class="title">Latest News</h2>
-                <div class="desc">
+                {{-- <div class="desc">
           <p style="font-size: 0.8rem; color: #51555a; font-weight: 400;">Present posts in a best way to highlight interesting moments of your blog.</p>
-                </div>
+                </div> --}}
               </div>
             </div>
           </div>

@@ -1,31 +1,34 @@
 <?php
-
 namespace App\Livewire\Frontend\Cart;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Cart;
+
 use Livewire\Component;
+use App\Helpers\CartHelper;
 
 class CartCount extends Component
 {
+    public $cartCount = 0;
 
-    public $cartCount;
-    protected $listeners = ['CartAddedUpdated' => 'checkCartCount'];
-    public function checkCartCount()
+    protected $listeners = [
+        'CartAddedUpdated' => 'updateCount',
+        'cartUpdated' => 'updateCount'
+    ];
+
+    public function mount()
     {
-        if(Auth::check()){
-            return $this->cartCount = Cart::where('user_id',auth()->user()->id)->count();
-        }
-        else
-        {
-return $this->cartCount = 0;
+        $this->updateCount();
+    }
+
+    public function updateCount()
+    {
+        if (auth()->check()) {
+            $this->cartCount = \App\Models\Cart::where('user_id', auth()->id())->count();
+        } else {
+            $this->cartCount = CartHelper::getCartCount();
         }
     }
 
     public function render()
     {
-        $this->cartCount = $this->checkCartCount();
-        return view('livewire.frontend.cart.cart-count',[
-            'cartCount' => $this->cartCount
-        ]);
+        return view('livewire.frontend.cart.cart-count');
     }
 }

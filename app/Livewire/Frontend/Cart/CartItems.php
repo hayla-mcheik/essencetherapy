@@ -1,55 +1,132 @@
 <?php
-
 namespace App\Livewire\Frontend\Cart;
 
-use App\Models\Cart;
 use Livewire\Component;
+use App\Models\Product;
+use App\Helpers\CartHelper;
 
 class CartItems extends Component
 {
-    public $carts;
-    public $totalAmount;
-    public $cartCount;
-    protected $listeners = ['CartAddedUpdated' => 'updateCart'];
+    public $cartData = [];
+    public $total = 0;
+    public $count = 0;
+
+    protected $listeners = [
+        'CartAddedUpdated' => 'loadCart',
+        'cartUpdated' => 'handleCartUpdate'
+    ];
 
     public function mount()
     {
-        $this->updateCart();
+        $this->loadCart();
     }
 
-    public function updateCart()
+    public function handleCartUpdate($total, $count)
     {
-        // Check if the user is authenticated
-        if (auth()->check()) {
-            $this->cartCount = Cart::where('user_id',auth()->user()->id)->count();
-            $this->carts = Cart::where('user_id', auth()->user()->id)->with('product.productImages')->get();
-            $this->totalAmount = $this->carts->sum(function($cart) {
-                return $cart->product->selling_price * $cart->quantity;
-            });
+        // If we receive the total from the event, use it directly
+        if ($total !== null) {
+            $this->total = $total;
+            $this->count = $count;
+            // Still reload cart data to ensure items are correct
+            $this->loadCartData();
         } else {
-            // Handle the case where the user is not authenticated
-            $this->carts = collect(); // An empty collection
-            $this->totalAmount = 0;
+            // Fallback to full reload
+            $this->loadCart();
         }
     }
 
-    public function removeCartItem($cartId)
+    public function loadCart()
     {
-        // Check if the user is authenticated
+        $this->loadCartData();
+        $this->calculateTotals();
+        
+        // Dispatch the updated totals to other components
+        $this->dispatch('cartUpdated', 
+            total: $this->total, 
+            count: $this->count
+        );
+    }
+
+    public function loadCartData()
+    {
         if (auth()->check()) {
-            Cart::where('id', $cartId)->where('user_id', auth()->user()->id)->delete();
-            $this->dispatch('CartAddedUpdated');
-            $this->updateCart();
+            // For authenticated users - get from database
+            $dbCarts = \App\Models\Cart::where('user_id', auth()->id())
+                ->with('product.productImages', 'product.category')
+                ->get();
+            
+            $items = [];
+            foreach ($dbCarts as $cart) {
+                if ($cart->product) {
+                    $items[] = [
+                        'id' => $cart->product->id,
+                        'name' => $cart->product->name,
+                        'slug' => $cart->product->slug,
+                        'price' => $cart->product->selling_price,
+                        'quantity' => $cart->quantity,
+                        'image' => $cart->product->productImages->first()->image ?? null,
+                        'category_slug' => $cart->product->category->slug ?? 'all'
+                    ];
+                }
+            }
+            $this->cartData = $items;
+        } else {
+            // For guest users - get from cookie
+            $guestCart = CartHelper::getGuestCart();
+            $items = [];
+            
+            foreach ($guestCart as $productId => $data) {
+                $product = Product::with('productImages', 'category')->find($productId);
+                if ($product) {
+                    $items[] = [
+                        'id' => $product->id,
+                        'name' => $product->name,
+                        'slug' => $product->slug,
+                        'price' => $product->selling_price,
+                        'quantity' => $data['quantity'],
+                        'image' => $product->productImages->first()->image ?? null,
+                        'category_slug' => $product->category->slug ?? 'all'
+                    ];
+                }
+            }
+            $this->cartData = $items;
         }
+    }
+
+    public function calculateTotals()
+    {
+        $this->total = collect($this->cartData)->sum(function ($item) {
+            return $item['price'] * $item['quantity'];
+        });
+        $this->count = count($this->cartData);
+        
+        // Log for debugging (remove in production)
+        \Log::info('CartItems totals calculated', [
+            'total' => $this->total,
+            'count' => $this->count,
+            'items' => $this->cartData
+        ]);
+    }
+
+    public function removeItem($productId)
+    {
+        if (auth()->check()) {
+            \App\Models\Cart::where('user_id', auth()->id())
+                ->where('product_id', $productId)
+                ->delete();
+        } else {
+            CartHelper::removeItem($productId);
+        }
+        
+        $this->loadCart(); // This will recalculate and dispatch events
     }
 
     public function render()
     {
- 
         return view('livewire.frontend.cart.cart-items', [
-            'carts' => $this->carts,
-            'totalAmount' => $this->totalAmount,
-            'cartCount' => $this->cartCount,
+            'items' => $this->cartData,
+            'total' => $this->total,
+            'count' => $this->count
         ]);
     }
 }

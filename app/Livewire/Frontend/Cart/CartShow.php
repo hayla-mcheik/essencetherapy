@@ -1,134 +1,146 @@
 <?php
-
 namespace App\Livewire\Frontend\Cart;
 
-use App\Models\Cart;
 use Livewire\Component;
+use App\Models\Product;
+use App\Helpers\CartHelper;
 
 class CartShow extends Component
 {
-    public $cart, $totalPrice = 0;
+    public $cartItems = [];
+    public $totalPrice = 0;
 
-    public function decrementQuantity(int $cartId)
+    protected $listeners = [
+        'CartAddedUpdated' => 'loadCart',
+        'cartUpdated' => 'loadCart' // Listen for cart updates from other components
+    ];
+
+    public function mount()
     {
-        $cartData = Cart::where('id', $cartId)->where('user_id', auth()->id())->first();
+        $this->loadCart();
+    }
 
-        if (!$cartData) {
-            $this->dispatch(
-                'message',
-                text: 'Something Went Wrong!',
-                type: 'error',
-                status: 404
-            );
-            return;
+    public function loadCart()
+    {
+        if (auth()->check()) {
+            $dbCarts = \App\Models\Cart::where('user_id', auth()->id())
+                ->with('product')
+                ->get();
+            
+            $items = [];
+            foreach ($dbCarts as $cart) {
+                if ($cart->product) {
+                    $items[] = [
+                        'id' => $cart->id,
+                        'product_id' => $cart->product->id,
+                        'name' => $cart->product->name,
+                        'slug' => $cart->product->slug,
+                        'price' => $cart->product->selling_price,
+                        'quantity' => $cart->quantity,
+                        'image' => $cart->product->productImages->first()->image ?? null,
+                        'category_slug' => $cart->product->category->slug ?? 'all'
+                    ];
+                }
+            }
+            $this->cartItems = $items;
+        } else {
+            $guestCart = CartHelper::getGuestCart();
+            $items = [];
+            
+            foreach ($guestCart as $productId => $data) {
+                $product = Product::with('productImages', 'category')->find($productId);
+                if ($product) {
+                    $items[] = [
+                        'id' => $productId,
+                        'product_id' => $productId,
+                        'name' => $product->name,
+                        'slug' => $product->slug,
+                        'price' => $product->selling_price,
+                        'quantity' => $data['quantity'],
+                        'image' => $product->productImages->first()->image ?? null,
+                        'category_slug' => $product->category->slug ?? 'all'
+                    ];
+                }
+            }
+            $this->cartItems = $items;
         }
 
-        if ($cartData->quantity <= 1) {
-            $this->dispatch(
-                'message',
-                text: 'Quantity cannot be less than 1',
-                type: 'error',
-                status: 400
-            );
-            return;
+        $this->calculateTotal();
+    }
+
+    public function calculateTotal()
+    {
+        $this->totalPrice = collect($this->cartItems)->sum(function ($item) {
+            return $item['price'] * $item['quantity'];
+        });
+    }
+
+    public function updateQuantity($productId, $action)
+    {
+        if (auth()->check()) {
+            $cart = \App\Models\Cart::where('user_id', auth()->id())
+                ->where('product_id', $productId)
+                ->first();
+            
+            if ($cart) {
+                if ($action === 'increase') {
+                    if ($cart->product->quantity > $cart->quantity) {
+                        $cart->increment('quantity');
+                    }
+                } elseif ($action === 'decrease' && $cart->quantity > 1) {
+                    $cart->decrement('quantity');
+                }
+            }
+        } else {
+            $guestCart = CartHelper::getGuestCart();
+            $product = Product::find($productId);
+            
+            if (isset($guestCart[$productId]) && $product) {
+                if ($action === 'increase') {
+                    if ($product->quantity > $guestCart[$productId]['quantity']) {
+                        $guestCart[$productId]['quantity']++;
+                    }
+                } elseif ($action === 'decrease' && $guestCart[$productId]['quantity'] > 1) {
+                    $guestCart[$productId]['quantity']--;
+                }
+                CartHelper::setGuestCart($guestCart);
+            }
         }
-
-        if ($cartData->product->selling_price < 1) {
-            $this->dispatch(
-                'message',
-                text: 'Product price must be at least $1',
-                type: 'error',
-                status: 400
-            );
-            return;
-        }
-
-        $cartData->decrement('quantity');
-
-        $this->dispatch(
-            'message',
-            text: 'Quantity Updated',
-            type: 'success',
-            status: 200
+        
+        // Reload cart data
+        $this->loadCart();
+        
+        // Dispatch events to update other components
+        $this->dispatch('cartUpdated', 
+            total: $this->totalPrice, 
+            count: count($this->cartItems)
         );
     }
 
-    public function incrementQuantity(int $cartId)
+    public function removeItem($productId)
     {
-        $cartData = Cart::where('id', $cartId)->where('user_id', auth()->id())->first();
-
-        if (!$cartData) {
-            $this->dispatch(
-                'message',
-                text: 'Something Went Wrong!',
-                type: 'error',
-                status: 404
-            );
-            return;
+        if (auth()->check()) {
+            \App\Models\Cart::where('user_id', auth()->id())
+                ->where('product_id', $productId)
+                ->delete();
+        } else {
+            CartHelper::removeItem($productId);
         }
-
-        if ($cartData->product->selling_price < 1) {
-            $this->dispatch(
-                'message',
-                text: 'Product price must be at least $1',
-                type: 'error',
-                status: 400
-            );
-            return;
-        }
-
-        if ($cartData->product->quantity <= $cartData->quantity) {
-            $this->dispatch(
-                'message',
-                text: 'Only ' . $cartData->product->quantity . ' Quantity Available',
-                type: 'success',
-                status: 200
-            );
-            return;
-        }
-
-        $cartData->increment('quantity');
-
-        $this->dispatch(
-            'message',
-            text: 'Quantity Updated',
-            type: 'success',
-            status: 200
-        );
-    }
-
-    public function removeCartItem(int $cartId)
-    {
-        $cartRemoveData = Cart::where('user_id', auth()->id())->where('id', $cartId)->first();
-
-        if (!$cartRemoveData) {
-            $this->dispatch(
-                'message',
-                text: 'Something Went Wrong',
-                type: 'error',
-                status: 500
-            );
-            return;
-        }
-
-        $cartRemoveData->delete();
-
-        $this->dispatch('CartAddedUpdated');
-
-        $this->dispatch(
-            'message',
-            text: 'Cart Item Removed Successfully',
-            type: 'success',
-            status: 200
+        
+        $this->loadCart();
+        
+        // Dispatch events to update other components
+        $this->dispatch('cartUpdated', 
+            total: $this->totalPrice, 
+            count: count($this->cartItems)
         );
     }
 
     public function render()
     {
-        $this->cart = Cart::where('user_id', auth()->id())->get();
-
         return view('livewire.frontend.cart.cart-show', [
-            'cart' => $this->cart
+            'items' => $this->cartItems,
+            'total' => $this->totalPrice
         ]);
     }
 }

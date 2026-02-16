@@ -46,9 +46,12 @@
   <div class="footer-bottom">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-lg-12 col-md-12 text-center text-lg-center mb-3 mb-lg-0">
-          <p class="copyright mb-0">Copyright © 2025 Lakanto. All Rights Reserved | Made with <i class="fa fa-heart-o text-danger"></i> by <a target="_blank" href="https://www.jgroup-me.com/" class="text-decoration-underline">__Promofix.</a></p>
-        </div>
+<div class="col-lg-12 col-md-12 text-center text-lg-center mb-3 mb-lg-0">
+    <p class="copyright mb-0">
+        Copyright © {{ date('Y') }} Taly's Collection. All Rights Reserved
+    </p>
+</div>
+
         {{-- <div class="col-lg-6 col-md-12 text-center text-lg-end">
           <div class="payment">
             <img src="{{ asset('assets/img/photos/payment.png')}}" alt="Payment Methods" class="img-fluid">

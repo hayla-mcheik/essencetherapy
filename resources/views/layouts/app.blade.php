@@ -61,6 +61,51 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @livewireStyles
        <style>
+        /* Sidebar Cleanup */
+.mobile-main-nav {
+    list-style: none;
+    padding: 20px 0;
+    margin: 0;
+}
+
+.mobile-main-nav > li {
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.mobile-main-nav > li > a {
+    display: block;
+    padding: 15px 25px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #51555A;
+    text-transform: uppercase;
+}
+
+/* Sub-categories Styling */
+.mobile-sub-categories {
+    list-style: none;
+    padding: 0 0 15px 40px;
+    background: #fafafa;
+}
+
+.mobile-sub-categories li a {
+    display: block;
+    padding: 10px 0;
+    font-size: 11px;
+    color: #51555A;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+/* Arrow Rotation */
+.has-mobile-dropdown.active .ion-ios-arrow-down {
+    transform: rotate(180deg);
+    transition: 0.3s;
+}
+
+.has-mobile-dropdown.active > a {
+    color: #D97DA5; /* Your pink theme color */
+}
         /* Enhanced Footer Styles */
         .footer-connect-section {
             background: var(--logo-pink-dark) ;
@@ -339,37 +384,7 @@
 
             @yield('content')
             
-    <!--== Start Contact Info Area Wrapper ==-->
-    <section class="bg-light">
-      <div class="container pt-35 pb-40">
-        <div class="row">
-          <div class="col-12">
-            <div class="contact-info contact-info-static">
-              <div class="row">
-                <div class="col-border col-12 col-md-6 col-sm-6 border-0">
-                  <div class="info-item">
-                    <div class="icon-box">
-                      <i class="icon las la-phone-volume"></i>
-                    </div>
-                    <p>00961 3 979504</p>
-                  </div>
-                </div>
-                <div class="col-border col-12 col-md-6 col-sm-6 mt-xs-35">
-                  <div class="info-item">
-                    <div class="icon-box">
-                      <i class="icon las la-envelope"></i>
-                    </div>
-                    <p>admin@nutrihublb.com</p>
-                  </div>
-                </div>
-        
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--== End Contact Info Area Wrapper ==-->
+
 
     <!--== Start Footer Connect Section ==-->
     <section class="footer-connect-section">
@@ -378,13 +393,30 @@
           <div class="col-lg-6 mb-4 mb-lg-0">
             <div class="social-connect-box text-center">
               <h3 class="section-title">Let's Connect On Social</h3>
-              <div class="social-icons-enhanced">
-                <a href="#" class="facebook"><i class="la la-facebook"></i></a>
-                <a href="#" class="twitter"><i class="la la-twitter"></i></a>
-                <a href="#" class="youtube"><i class="la la-youtube"></i></a>
-                <a href="#" class="instagram"><i class="la la-instagram"></i></a>
-              </div>
-              <p class="connect-description">Follow us on your favorite platforms. Check out new launch teasers, how-to videos, and share your favorite looks.</p>
+         <div class="social-icons-enhanced">
+    {{-- Safe check for Facebook --}}
+    @if(optional($appSetting)->facebook)
+        <a href="{{ $appSetting->facebook }}" target="_blank" class="facebook">
+            <i class="la la-facebook"></i>
+        </a>
+    @endif
+
+    {{-- Safe check for TikTok (mapped to youtube field) --}}
+    @if(optional($appSetting)->youtube)
+        <a href="{{ $appSetting->youtube }}" target="_blank" class="tiktok">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16" style="margin-top: 0px;">
+                <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z"/>
+            </svg>
+        </a>
+    @endif
+
+    {{-- Safe check for Instagram --}}
+    @if(optional($appSetting)->instagram)
+        <a href="{{ $appSetting->instagram }}" target="_blank" class="instagram">
+            <i class="la la-instagram"></i>
+        </a>
+    @endif
+</div>
             </div>
           </div>
           <div class="col-lg-6">
@@ -412,8 +444,7 @@
                   </div>
                   <button class="btn btn-submit-enhanced" type="submit">Subscribe Now</button>
                 </form>
-                <p class="newsletter-description">You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice.</p>
-              </div>
+            </div>
             </div>
           </div>
         </div>
@@ -424,33 +455,44 @@
             @include('layouts.inc.frontend.footer')
               <!--== Scroll Top Button ==-->
   <div id="scroll-to-top" class="scroll-to-top"><span class="ion-md-arrow-up"></span></div>
-
-  <!--== Start Side Menu ==-->
-  <aside class="off-canvas-wrapper">
-    <div class="off-canvas-inner">
-      <div class="off-canvas-overlay"></div>
-      <!-- Start Off Canvas Content Wrapper -->
-      <div class="off-canvas-content">
-        <!-- Off Canvas Header -->
-        <div class="off-canvas-header">
-          <div class="close-action">
-            <button class="btn-menu-close">menu <i class="icon-arrow-left"></i></button>
-          </div>
-        </div>
-
-        <div class="off-canvas-item">
-          <!-- Start Mobile Menu Wrapper -->
-          <div class="res-mobile-menu menu-active-one">
-            <!-- Note Content Auto Generate By Jquery From Main Menu -->
-          </div>
-          <!-- End Mobile Menu Wrapper -->
+<aside class="off-canvas-wrapper ul-sidebar">
+  <div class="off-canvas-inner">
+    <div class="off-canvas-overlay"></div>
+    <div class="off-canvas-content">
+      <div class="off-canvas-header">
+        <div class="close-action">
+          <button class="btn-menu-close ul-sidebar-closer">MENU <i class="icon-arrow-left"></i></button>
         </div>
       </div>
-      <!-- End Off Canvas Content Wrapper -->
-    </div>
-  </aside>
-  <!--== End Side Menu ==-->
 
+      <div class="off-canvas-item">
+        <div class="custom-mobile-menu">
+          <ul class="mobile-main-nav">
+            <li><a href="{{ url('aboutus') }}">About Us</a></li>
+            
+            <li class="has-mobile-dropdown">
+              <a href="javascript:void(0)" class="mobile-dropdown-trigger">
+                Products <i class="ion-ios-arrow-down float-end"></i>
+              </a>
+              <ul class="mobile-sub-categories" style="display: none;">
+                @foreach($allCategories as $categoryItem)
+                  <li>
+                    <a href="{{ url('collections/'.$categoryItem->slug) }}">
+                      {{ $categoryItem->name }}
+                    </a>
+                  </li>
+                @endforeach
+              </ul>
+            </li>
+
+            <li><a href="{{ url('blogs') }}">News</a></li>
+            <li><a href="{{ url('contactus') }}">Contact us</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
      
     </div>
 
@@ -519,6 +561,26 @@
 
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script>
+    // Inside your existing DOMContentLoaded block:
+const mobileDropTrigger = document.querySelector('.mobile-dropdown-trigger');
+
+if (mobileDropTrigger) {
+    mobileDropTrigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        const parentLi = this.parentElement;
+        const subMenu = this.nextElementSibling;
+        
+        // Toggle Active Class
+        parentLi.classList.toggle('active');
+        
+        // Slide Toggle logic
+        if (subMenu.style.display === "none" || subMenu.style.display === "") {
+            subMenu.style.display = "block";
+        } else {
+            subMenu.style.display = "none";
+        }
+    });
+}
     window.addEventListener('message', event => {
         alertify.set('notifier','position', 'top-right');
         alertify.notify(event.detail.text , event.detail.type);

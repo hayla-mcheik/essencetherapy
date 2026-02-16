@@ -1,18 +1,29 @@
-/.phpunit.cache
+# Dependencies
+/node_modules
+/vendor
 
+# Testing & Cache
+/.phpunit.cache
+.phpunit.result.cache
+
+# Laravel / Public
 /public/hot
 /public/storage
 /storage/*.key
 
+# Environment & Config
 .env
 .env.backup
 .env.production
 Homestead.json
 Homestead.yaml
 auth.json
+
+# Logs
 npm-debug.log
 yarn-error.log
-.phpunit.result.cache
+
+# IDE / Editor folders
 /.fleet
 /.idea
 /.vscode

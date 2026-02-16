@@ -24,8 +24,37 @@ Auth::routes([
     'verify' => true
 ]);
 
+Route::get('/debug-cart-view', function() {
+    if (auth()->check()) {
+        $cart = \App\Models\Cart::where('user_id', auth()->id())
+            ->with('product')
+            ->get()
+            ->toArray();
+    } else {
+        $guestCart = \App\Helpers\CartHelper::getGuestCart();
+        $productIds = array_keys($guestCart);
+        $products = \App\Models\Product::whereIn('id', $productIds)->get();
+        
+        $cart = [];
+        foreach($products as $product) {
+            $cart[] = [
+                'id' => $product->id,
+                'product' => $product->toArray(),
+                'quantity' => $guestCart[$product->id]['quantity']
+            ];
+        }
+    }
+    
+    return response()->json([
+        'cart' => $cart,
+        'count' => count($cart),
+        'html' => view('debug-cart', ['cart' => $cart])->render()
+    ]);
+});
 
 
+    Route::get('cart', [App\Http\Controllers\Frontend\CartController::class, 'index']);
+    Route::get('checkout', [App\Http\Controllers\Frontend\CheckoutController::class, 'index']);
 Route::controller(App\Http\Controllers\Frontend\FrontendController::class)->group(function () {
     Route::get('/','index');
     Route::get('/collections','categories');
@@ -45,8 +74,7 @@ Route::get('/product/quick-view/{id}','quickView');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('wishlist', [App\Http\Controllers\Frontend\WishlistController::class, 'index']);
-    Route::get('cart', [App\Http\Controllers\Frontend\CartController::class, 'index']);
-    Route::get('checkout', [App\Http\Controllers\Frontend\CheckoutController::class, 'index']);
+
     Route::get('orders',[App\Http\Controllers\Frontend\OrderController::class, 'index']);
     Route::get('orders/{orderId}',[App\Http\Controllers\Frontend\OrderController::class, 'show']);
     Route::get('profile',[App\Http\Controllers\Frontend\UserController::class,'index']);
@@ -67,7 +95,18 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function () {
 Route::get('settings',[App\Http\Controllers\Admin\SettingController::class, 'index']);
 Route::post('settings',[App\Http\Controllers\Admin\SettingController::class, 'store']);
 
+// Add this inside the Route::prefix('admin')->group(function () { ... }); block
+Route::controller(App\Http\Controllers\Admin\BannerController::class)->group(function () {
+    Route::get('/banners', 'index')->name('admin.banners.index');
+    Route::get('/banners/edit', 'edit')->name('admin.banners.edit'); // No {id} needed if it's only one
+    Route::put('/banners/update', 'update')->name('admin.banners.update');
+});
 
+Route::controller(App\Http\Controllers\Admin\TickerController::class)->group(function () {
+    Route::get('/tickers', 'index')->name('admin.tickers.index');
+    Route::post('/tickers', 'store')->name('admin.tickers.store'); // Added this line
+    Route::put('/tickers/{id}', 'update')->name('admin.tickers.update');
+});
 Route::controller(App\Http\Controllers\Admin\ReviewsController::class)->group(function () {
 Route::get('/reviews','index')->name('admin.reviews.index');
 Route::get('/reviews/create','create')->name('admin.reviews.create');

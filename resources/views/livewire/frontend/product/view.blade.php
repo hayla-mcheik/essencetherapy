@@ -87,13 +87,16 @@
                       </div>
                       <div class="product-quick-action">
                 
-                        <a class="btn-product-add" type="submit"  wire:click="addToCart({{ $product->id }})">Add to cart</a>
-                        <div class="product-wishlist-compare mb-0">
+             <div class="white-bg">                            
+                                    <livewire:frontend.cart.add-to-cart :product="$product"/>
+                                </div>
+
+                        {{-- <div class="product-wishlist-compare mb-0">
                           <a class="variant__wishlist--icon mb-0 mx-4" wire:click="addToWishList({{ $product->id }})">
                               <span wire:loading.remove wire:target="addToWishList">  <i class="fa fa-heart"></i> Add To Wishlist </span>
                   <span wire:loading wire:target="addToWishList">Adding...</span>
                           </a>
-                        </div>
+                        </div> --}}
                       </div>
        
                     </div>

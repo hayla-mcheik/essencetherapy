@@ -10,13 +10,13 @@
             </div>
           </div>
 
-                <div class="col-md-6 col-lg-4 text-md-start text-lg-center text-center">
-                    <div class="luxury-ticker">
-                        <div class="ticker-item text-white">✨ Free Delivery on all orders over $100</div>
-                        <div class="ticker-item text-white">💎 New Jewelry Collection is Live</div>
-                        <div class="ticker-item text-white">🌸 Handcrafted with Love in Lebanon</div>
-                    </div>
-                </div>
+    <div class="col-md-6 col-lg-4 text-md-start text-lg-center text-center">
+    <div class="luxury-ticker">
+        @foreach($tickers as $item)
+            <div class="ticker-item text-white">{{ $item->content }}</div>
+        @endforeach
+    </div>
+</div>
           <div class="col-md-6 col-lg-4 text-md-end text-center mt-sm-15">
             @guest
             <div class="theme-setting">
@@ -108,9 +108,18 @@
     <span class="phone" style="display: block; font-weight: 600; margin-bottom: 3px;">
         Talk To Us: <a href="tel:00961 79353846" style="color: #D97DA5;">00961 79353846</a>
     </span>
-    <div class="time-contact" style="font-size: 9px; color: #aaa; text-transform: uppercase; letter-spacing: 1.2px; line-height: 1.4;">
-        Our style concierge is at your service Monday through Saturday, 9 AM – 10 PM
-    </div>
+<div class="time-contact" style="font-size: 9px; color: #aaa; text-transform: uppercase; letter-spacing: 1.2px; line-height: 1.4;">
+    We believe jewelry is the final touch that brings a look together - for both women and men.
+    
+    @if(optional($appSetting)->address)
+        <br/> 
+        <span style="color: #888;">Address:</span> 
+        <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($appSetting->address) }}" target="_blank" style="color: #aaa; text-decoration: underline;">
+            {{ $appSetting->address }}
+        </a>
+    @endif
+</div>
+
 </div>
             </div>
           </div>
@@ -142,12 +151,12 @@
               </div> --}}
               <div class="shop-button-group">
        
-                    <div class="shop-button-item">
+                    {{-- <div class="shop-button-item">
                       <a class="shop-button" href="{{ url('wishlist') }}">
                         <i class="icon-heart icon"></i>
                         <sup class="shop-count"><livewire:frontend.wishlist-count /></sup>
                       </a>
-                    </div>
+                    </div> --}}
                 <div class="shop-button-item">
                   <a class="shop-button">
                     <i class="icon-bag icon"></i>
@@ -177,11 +186,45 @@
                 <ul class="main-menu nav">
               
                       <li><a href="{{ url('aboutus') }}">About Us</a></li>
-                      <li><a href="{{ url('collections')}}">Shop Products</a>
-                      <li><a href="{{ url('collections')}}">Jewellery</a>
-                      <li><a href="{{ url('collections')}}">lunette</a>
-                      <li><a href="{{ url('collections')}}">bags</a>
-                      <li><a href="{{ url('collections')}}">makeup</a>
+<li class="has-dropdown position-static">
+    <a href="javascript:void(0)" class="dropdown-click-trigger">
+        Products <i class="ion-ios-arrow-down"></i>
+    </a>
+    <div class="mega-menu small-mega">
+        <div class="container">
+            <div class="row align-items-center"> <div class="col-lg-7">
+                    <div class="row">
+                        @foreach($allCategories->chunk(4) as $chunk)
+                            <div class="col-lg-6">
+                                <ul class="mega-menu-items compact">
+                                    @foreach($chunk as $categoryItem)
+                                        <li>
+                                            <a href="{{ url('collections/'.$categoryItem->slug) }}">
+                                                {{ $categoryItem->name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="col-lg-5 d-none d-lg-block">
+                    <div class="menu-banner small-banner">
+                        <a href="{{ url('collections') }}">
+                            <img src="{{ asset('assets/img/categories-image-resize.jpg') }}" alt="New Collection" class="w-[150px]" style="width: 650px">
+                            <div class="banner-content compact">
+                                <h5>New Arrival</h5>
+                                <span>Shop Now</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
                       <li><a href="{{ url('blogs')}}">News</a>           
                       </li>
                       <li><a href="{{ url('contactus') }}">Contact us</a></li>
@@ -216,8 +259,8 @@
             <div class="header-item justify-content-end">
               <button class="btn-user" onclick="window.location.href='{{url('account') }}'"><i class="icon-user"></i></button>
               <button class="btn-cart" onclick="window.location.href='{{url('cart')}}'"><i class="icon-bag"></i> <span class="item-count"><livewire:frontend.cart.cart-count /></span></button>
-               <button class="btn-cart" onclick="window.location.href='{{url('wishlist')}}'"><i class="icon-heart"></i> <span class="item-count"><livewire:frontend.wishlist-count /></span></button>
-       
+               {{-- <button class="btn-cart" onclick="window.location.href='{{url('wishlist')}}'"><i class="icon-heart"></i> <span class="item-count"><livewire:frontend.wishlist-count /></span></button>
+        --}}
               </div>
           </div>
           {{-- <div class="col-12">
@@ -240,13 +283,125 @@
   </header>
   <!--== End Header Wrapper ==-->
 <style>
-    
+  /* Make Mega Menu Smaller */
+.small-mega {
+    padding: 20px 0 !important; /* Reduced padding */
+    width: 60% !important;      /* Don't span full 100% width if you want it smaller */
+    left: 20% !important;       /* Center it because of the 80% width */
+    max-height: 350px;          /* Limit height */
+}
+
+/* Compact Categories */
+.mega-menu-items.compact li a {
+    font-size: 12px !important; /* Smaller text */
+    padding: 5px 0 !important;  /* Tighter spacing */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Smaller Banner */
+.small-banner {
+    max-height: 180px;
+    overflow: hidden;
+}
+
+.banner-content.compact h5 {
+    font-size: 14px;
+    color: #fff;
+    margin: 0;
+}
+
+/* Click Functionality Classes */
+.mega-menu.is-open {
+    display: block !important;
+}
+
+/* Optional: Keep hover support too, or remove this to only allow clicks */
+.has-dropdown:hover .mega-menu {
+    display: block;
+}
+/* Mega Menu Base */
+.position-static {
+    position: static !important;
+}
+
+.mega-menu {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 100%;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    padding: 30px 0;
+    display: none; /* Hide by default */
+    z-index: 999;
+    border-top: 1px solid #f2f2f2;
+}
+
+.has-dropdown:hover .mega-menu {
+    display: block; /* Show on hover */
+}
+
+/* Categories List Styling */
+.mega-menu-items {
+    list-style: none;
+    padding: 0;
+}
+
+.mega-menu-items li a {
+    font-size: 14px;
+    color: #51555a;
+    padding: 10px 0;
+    display: block;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.mega-menu-items li a:hover {
+    color: #D97DA5; /* Pink theme color */
+}
+
+/* Banner Styling */
+.menu-banner {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.menu-banner img {
+    transition: transform 0.5s ease;
+    width: 100%;
+}
+
+.menu-banner:hover img {
+    transform: scale(1.05);
+}
+
+.banner-content {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+.banner-content h4 {
+    color: #fff;
+    margin-bottom: 5px;
+    font-size: 18px;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+}
+
+.banner-content span {
+    color: #fff;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
     /* Small text aesthetic for luxury feel */
     .header-top, 
     .main-menu li a, 
     .contact-info span, 
     .dropdown-btn {
-      font-size: 13px !important; 
+      font-size: 12px !important; 
       text-transform: capitalize;
       font-weight: 700;
     }
@@ -325,3 +480,22 @@
     
 }
   </style>
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const trigger = document.querySelector('.dropdown-click-trigger');
+    const menu = document.querySelector('.mega-menu');
+
+    trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        menu.classList.toggle('is-open');
+    });
+
+    // Close menu when clicking anywhere else on the page
+    document.addEventListener('click', function(e) {
+        if (!menu.contains(e.target) && !trigger.contains(e.target)) {
+            menu.classList.remove('is-open');
+        }
+    });
+});
+</script>
