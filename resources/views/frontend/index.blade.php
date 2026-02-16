@@ -98,9 +98,10 @@
 
 <section>
     <div class="about-editorial-root py-5 position-relative overflow-hidden">
-        
+        @if($about)
         <div class="art-background-layer">
-            <div class="large-bg-text">Taly's Collection</div>
+            
+            <div class="large-bg-text">{{ $about->title ?? 'About Us' }}</div>
             <svg class="botanical-svg" viewBox="0 0 100 100" fill="none">
                 <path d="M10 80C30 80 80 60 90 10M10 80C40 70 80 40 90 10" stroke="#b95c19" stroke-width="0.2" opacity="0.2"/>
             </svg>
@@ -109,13 +110,12 @@
         <div class="wide-content-wrapper px-4 px-md-5 position-relative z-2">
             
             <div class="header-minimal mb-4">
-                <h2 class="display-title mt-2">Tallys Collections Accessories</h2>
+                <h2 class="display-title mt-2">{{ $about->title ?? 'About Us' }}</h2>
  
             </div>
 
             <div class="description-full-width">
-                <p class="editorial-text" v-html="">Taly's Collection was born from a simple idea : style is never complete without the right accessories. We believe jewelry #is the final touch that brings a look together - for both women and men.
-                  Thank you for being part of Taly's Collection - where small details create the boggest glow.
+                <p class="editorial-text" v-html="">{!! nl2br(e($about->description)) !!}
                 </p>
             </div>
 
@@ -125,10 +125,15 @@
             
                 </div>
             
-                <span class="motto mt-4">Taly's collection</span>
+                <span class="motto mt-4">{{ $about->title ?? 'About Us' }}</span>
             </div>
             
         </div>
+        @else
+        <div class="container py-5 text-center">
+            <p>About Us content is currently being updated.</p>
+        </div>
+    @endif
     </div>
   </section>
 
@@ -282,9 +287,9 @@ defineProps({ about: Object });
                                 
                                 {{-- <livewire:frontend.indexwish :product="$product"/>
                                  --}}
-                                <div class="white-bg">                            
+                                {{-- <div class="white-bg">                            
                                     <livewire:frontend.cart.add-to-cart :product="$product"/>
-                                </div>
+                                </div> --}}
 
                                 <ul class="product-flag">
                                     <li class="new" style="font-size: 10px;">
@@ -334,7 +339,7 @@ defineProps({ about: Object });
 </section>
 
   <!--== End Popup Product  ==-->
-<section class="divider-area divider-product-discount-area bg-img" data-bg-img="{{ asset('assets/img/banner-home.jpg')}}">
+{{-- <section class="divider-area divider-product-discount-area bg-img" data-bg-img="{{ asset('assets/img/banner-home.jpg')}}">
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -459,18 +464,16 @@ defineProps({ about: Object });
     }
   }
 
-</style>
+</style> --}}
 
 
-<section class="product-area">
+{{-- <section class="product-area">
     <div class="container pt-95 pt-lg-70 pb-lg-60">
         <div class="row">
             <div class="col-sm-8 m-auto">
                 <div class="section-title text-center mb-1">
                     <h2 class="title" style="text-transform: capitalize; font-size: 20px; letter-spacing: 1px;">Featured Products</h2>
-                    {{-- <div class="desc">
-                        <p style="font-size: 0.8rem; color: #51555a; font-weight: 400;">Add our Featured Products to your weekly lineup</p>
-                    </div> --}}
+       
                 </div>
             </div>
         </div>
@@ -492,7 +495,7 @@ defineProps({ about: Object });
                                                 </a>
                                             @endif
                                             
-                                            {{-- <livewire:frontend.indexwish :product="$productItem"/> --}}
+                                    
                                             
                                             <div class="white-bg">                            
                                                 <livewire:frontend.cart.add-to-cart :product="$productItem"/>
@@ -544,7 +547,7 @@ defineProps({ about: Object });
             </div>
         </div>
     </div>
-</section>
+</section> --}}
     <!--== Start Blog Area Wrapper ==-->
     <section class="blog-area">
         <div class="container pt-95 pb-100 pt-lg-70 pb-lg-65">

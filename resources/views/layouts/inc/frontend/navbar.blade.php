@@ -6,7 +6,16 @@
         <div class="row">
           <div class="col-lg-4 hidden-md-down">
             <div class="contact-email">
-              <span>Email us: <a href="mailto:admin@accessories.com">info@talyscollection.com</a></span>
+              <span>Email us:
+                        <a href="mailto:{{ $appSetting->email1 ?? 'info@talyscollection.com' }}">
+                            {{ $appSetting->email1 ?? 'info@talyscollection.com' }}
+                        </a>
+                        @if($appSetting->email2)
+                            <br>
+                            <a href="mailto:{{ $appSetting->email2 }}">
+                                {{ $appSetting->email2 }}
+                            </a>
+                        @endif</span>
             </div>
           </div>
 
@@ -19,7 +28,7 @@
 </div>
           <div class="col-md-6 col-lg-4 text-md-end text-center mt-sm-15">
             @guest
-            <div class="theme-setting">
+            {{-- <div class="theme-setting">
               <a class="dropdown-btn" href="#" role="button">
                 Login/Register
                 <i class="ion-ios-arrow-down"></i> 
@@ -38,8 +47,8 @@
 
 
               </ul>
-            </div>
-
+            </div> --}}
+<div></div>
             @elseif (auth()->user()->role_as == '1')
             <div class="theme-setting">
               <a class="dropdown-btn" href="#" role="button">
@@ -186,45 +195,20 @@
                 <ul class="main-menu nav">
               
                       <li><a href="{{ url('aboutus') }}">About Us</a></li>
-<li class="has-dropdown position-static">
-    <a href="javascript:void(0)" class="dropdown-click-trigger">
-        Products <i class="ion-ios-arrow-down"></i>
-    </a>
-    <div class="mega-menu small-mega">
-        <div class="container">
-            <div class="row align-items-center"> <div class="col-lg-7">
-                    <div class="row">
-                        @foreach($allCategories->chunk(4) as $chunk)
-                            <div class="col-lg-6">
-                                <ul class="mega-menu-items compact">
-                                    @foreach($chunk as $categoryItem)
-                                        <li>
-                                            <a href="{{ url('collections/'.$categoryItem->slug) }}">
-                                                {{ $categoryItem->name }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="col-lg-5 d-none d-lg-block">
-                    <div class="menu-banner small-banner">
-                        <a href="{{ url('collections') }}">
-                            <img src="{{ asset('assets/img/categories-image-resize.jpg') }}" alt="New Collection" class="w-[150px]" style="width: 650px">
-                            <div class="banner-content compact">
-                                <h5>New Arrival</h5>
-                                <span>Shop Now</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</li>
+     <li class="has-dropdown">
+                    <a href="javascript:void(0)" class="dropdown-click-trigger">Products <i class="ion-ios-arrow-down"></i></a>
+                    <ul class="boutique-dropdown">
+                        @if(isset($allCategories))
+                            @foreach($allCategories as $categoryItem)
+                                <li>
+                                    <a href="{{ url('collections/'.$categoryItem->slug) }}">
+                                        {{ $categoryItem->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        @endif
+                    </ul>
+                  </li>
                       <li><a href="{{ url('blogs')}}">News</a>           
                       </li>
                       <li><a href="{{ url('contactus') }}">Contact us</a></li>
@@ -283,6 +267,57 @@
   </header>
   <!--== End Header Wrapper ==-->
 <style>
+    /* 1. New Classic Dropdown Styling */
+  .boutique-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 42%;
+    background: #fff;
+    min-width: 200px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    padding: 15px 0;
+    display: none;
+    z-index: 999;
+    border: 1px solid #f2f2f2;
+    border-radius: 4px;
+    text-align: left;
+  }
+
+  /* Show on Hover */
+  @media (min-width: 992px) {
+    .has-dropdown:hover .boutique-dropdown {
+        display: block;
+    }
+  }
+
+  /* Show on Click (via JS) */
+  .boutique-dropdown.is-open {
+    display: block !important;
+  }
+
+  .boutique-dropdown li {
+    display: block;
+    width: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .boutique-dropdown li a {
+    padding: 10px 25px !important;
+    color: #444 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    text-transform: capitalize !important;
+    display: block;
+    border: none !important;
+  }
+
+  .boutique-dropdown li a:hover {
+    color: #D97DA5 !important; /* Theme Pink */
+    background: #fafafa;
+    padding-left: 30px !important;
+  }
+
   /* Make Mega Menu Smaller */
 .small-mega {
     padding: 20px 0 !important; /* Reduced padding */

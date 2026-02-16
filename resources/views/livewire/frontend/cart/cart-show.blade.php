@@ -83,15 +83,12 @@
                                     <span class="label">{{ collect($items)->sum('quantity') }} items</span>
                                     <span class="value">${{ number_format($total, 2) }}</span>
                                 </div>
-                                <div class="card-block-item">
-                                    <span class="label">Total (Tax Incl.)</span>
-                                    <span class="value">${{ number_format($total, 2) }}</span>
-                                </div>
+                      
                             </div>
                             <div class="separator"></div>
                             <div class="card-block">
                                 <div class="card-block-item">
-                                    <span class="label">Total (Tax Incl.)</span>
+                                    <span class="label">Total</span>
                                     <span class="value">${{ number_format($total, 2) }}</span>
                                 </div>
                             </div>

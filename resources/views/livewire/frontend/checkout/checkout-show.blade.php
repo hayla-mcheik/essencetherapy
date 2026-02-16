@@ -21,10 +21,10 @@
                                             <div class="personal-addresses">
                                                 <p class="p-text">The selected address will be used both as your personal address (for invoice) and as your delivery address.</p>
                                                 <div class="personal-information">
-                                                    <ul>
+                                                    {{-- <ul>
                                                         <li>Not you? <a href="#/">Log out</a></li>
                                                         <li><small>If you sign out now, your cart will be emptied.</small></li>
-                                                    </ul>
+                                                    </ul> --}}
                                                 </div>
                                                 <div class="delivery-address-form">
                                                     <form wire:submit.prevent="validatePersonalInformation">
@@ -58,7 +58,7 @@
                                                         </div>
                                                         <div class="form-group row">
                                                             <div class="col-md-12 text-end">
-                                                                <button type="submit" class="btn-submit">Continue to Payment</button>
+                                                                <button type="submit" class=" btn btn-promocode-apply">Continue to Payment</button>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -81,7 +81,7 @@
                                         <div class="checkout-accordion-body" data-margin-top="14">
                                             <div class="personal-addresses">
                                                 @guest
-                                                    <p class="p-text">Checkout as Guest or <a href="{{ route('login') }}" style="color: #D97DA5; font-weight: bold;">Login here</a></p>
+                                                    <p></p>
                                                 @else
                                                     <div class="personal-information">
                                                         <ul>
@@ -138,7 +138,7 @@
                                                 <!-- Place Order Button -->
                                                 <div class="form-group row mt-4">
                                                     <div class="col-md-12 text-end">
-                                                        <button type="button" class="btn btn-primary btn-lg" wire:click="codOrder" wire:loading.attr="disabled">
+                                                        <button type="button" class="btn btn-promocode-apply" wire:click="codOrder" wire:loading.attr="disabled">
                                                             <span wire:loading.remove>Place Order (Cash on Delivery)</span>
                                                             <span wire:loading>Processing Order...</span>
                                                         </button>
@@ -178,14 +178,14 @@
                             <div class="shopping-cart-summary mt-md-70 mt-2">
                                 <div class="cart-detailed-totals">
                                     <div class="card-block">
-                                        <div class="card-block-item">
+                                        {{-- <div class="card-block-item">
                                             <span class="label">Subtotal</span>
                                             <span class="value">${{ number_format($totalProductAmount, 2) }}</span>
-                                        </div>
-                                        <div class="card-block-item">
+                                        </div> --}}
+                                        {{-- <div class="card-block-item">
                                             <span class="label">Shipping</span>
                                             <span class="value">Free</span>
-                                        </div>
+                                        </div> --}}
                                         <div class="card-block-item">
                                             <span class="label">Total</span>
                                             <span class="value">${{ number_format($totalProductAmount, 2) }}</span>
@@ -195,22 +195,7 @@
                             </div>
                         @endif
                         
-                        <div class="block-reassurance">
-                            <ul>
-                                <li>
-                                    <img src="{{ asset('assets/img/shop/cart/verified-user.png') }}" alt="Security">
-                                    <span>Security Policy</span>
-                                </li>
-                                <li>
-                                    <img src="{{ asset('assets/img/shop/cart/local-shipping.png') }}" alt="Delivery">
-                                    <span>Delivery Policy</span>
-                                </li>
-                                <li>
-                                    <img src="{{ asset('assets/img/shop/cart/swap-horiz.png') }}" alt="Returns">
-                                    <span>Return Policy</span>
-                                </li>
-                            </ul>
-                        </div>
+                   
                     </div>
                 </div>
             </div>

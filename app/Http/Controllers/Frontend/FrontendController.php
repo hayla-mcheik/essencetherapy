@@ -19,6 +19,7 @@ class FrontendController extends Controller
     public function index()
     {
         $sliders = Slider::where('status','0')->get(); 
+        $about = \App\Models\About::first();
         $trendingProducts = Product::where('trending','1')->latest()->take(15)->get();
         $newArrivalsProducts = Product::latest()->take(14)->get();
         $featuredProducts = Product::where('featured','1')->latest()->take(14)->get();
@@ -27,7 +28,7 @@ class FrontendController extends Controller
         $threecategories = Category::where('status','0')->take(3)->get();
         $blogs = Blogs::all();
 $banner = Banner::first();
-        return view('frontend.index',compact('sliders','trendingProducts','newArrivalsProducts','featuredProducts','categories','reviews','threecategories','blogs','banner'));
+        return view('frontend.index',compact('sliders','about','trendingProducts','newArrivalsProducts','featuredProducts','categories','reviews','threecategories','blogs','banner'));
     }
 
 
@@ -97,7 +98,8 @@ public function productView(string $category_slug , string $product_slug)
 
 public function aboutus()
 {
-    return view('frontend.aboutus');
+    $about = \App\Models\About::first();
+    return view('frontend.aboutus', compact('about'));
 }
 
 public function blogs()
@@ -108,9 +110,13 @@ public function blogs()
 
 public function blogdetails($id)
 {
-    $blog = Blogs::find($id);
-    $blogs = Blogs::all();
-    return view('frontend.blogs.blogdetails' , compact('blog','blogs')); 
+    // The specific blog being read
+    $blog = Blogs::findOrFail($id); 
+
+    // Fetch only the latest 4 posts for the sidebar
+    $latestBlogs = Blogs::latest()->take(4)->get(); 
+
+    return view('frontend.blogs.blogdetails', compact('blog', 'latestBlogs')); 
 }
 public function contactus()
 {
@@ -163,7 +169,7 @@ public function contactsubmit(Request $request)
         'message' => $request->message,
     ];
 
-    Mail::to('mcheikhayla26@gmail.com')->send(new ContactFormMail($emailData));
+    Mail::to('info@talyscollection.com')->send(new ContactFormMail($emailData));
     
     return back()->with('success', 'Your message has been submitted successfully.');
 }

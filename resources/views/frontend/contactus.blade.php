@@ -87,7 +87,7 @@
             <input class="form-control @error('phone') is-invalid @enderror" 
                    type="tel" 
                    name="phone" 
-                   placeholder="Phone (8-15 digits)" 
+                   placeholder="Phone" 
                    value="{{ old('phone') }}"
                    requi#d40707>
             @error('phone')
@@ -130,36 +130,54 @@
                 <!--== End Contact Form ==-->
               </div>
             </div>
-            <div class="col-lg-6">
-              <div class="contact-info-list">
-                <div class="contact-info">
-                  <div class="info-item">
-                    <div class="info">
-                      <h5 class="title">Phone:</h5>
-                      <p>
-                        <a href="tel:00961 3 979504">00961 3 979504</a>
-                      </p>
-                    </div>
-                  </div>
-                  <div class="info-item">
-                    <div class="info">
-                      <h5 class="title">Email:</h5>
-                      <p>
-                        <a href="mailto:admin@nutrihublb.com">admin@nutrihublb.com</a>
-                      </p>
-                    </div>
-                  </div>
-                  <div class="info-item">
-                    <div class="info">
-                      <h5 class="title">Address:</h5>
-                      <p>PH trading SARL
-Mansourieh Maten, main street
-</p>
-                    </div>
-                  </div>
+        <div class="col-lg-6">
+    <div class="contact-info-list">
+        <div class="contact-info">
+            <div class="info-item">
+                <div class="info">
+                    <h5 class="title">Phone:</h5>
+                    <p>
+                        <a href="tel:{{ $appSetting->phone1 ?? '00961 3 979504' }}">
+                            {{ $appSetting->phone1 ?? '00961 3 979504' }}
+                        </a>
+                        @if($appSetting->phone2)
+                            <br>
+                            <a href="tel:{{ $appSetting->phone2 }}">
+                                {{ $appSetting->phone2 }}
+                            </a>
+                        @endif
+                    </p>
                 </div>
-              </div>
             </div>
+
+            <div class="info-item">
+                <div class="info">
+                    <h5 class="title">Email:</h5>
+                    <p>
+                        <a href="mailto:{{ $appSetting->email1 ?? 'info@talyscollection.com' }}">
+                            {{ $appSetting->email1 ?? 'info@talyscollection.com' }}
+                        </a>
+                        @if($appSetting->email2)
+                            <br>
+                            <a href="mailto:{{ $appSetting->email2 }}">
+                                {{ $appSetting->email2 }}
+                            </a>
+                        @endif
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info">
+                    <h5 class="title">Address:</h5>
+                    <p>
+                        {!! nl2br(e($appSetting->address ?? "PH trading SARL\nMansourieh Maten, main street")) !!}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
           </div>
         </div>
       </section>
