@@ -273,7 +273,7 @@ defineProps({ about: Object });
         <div class="row">
             {{-- Using newArrivalsProducts and taking only 6 items --}}
             @forelse ($newArrivalsProducts->take(6) as $product)
-                <div class="col-6 col-md-4 col-lg-4 mb-30">
+                <div class="col-6 col-md-4 col-lg-4 mb-30 p-0">
                     <div class="product-item">
                         <div class="inner-content">
                             <div class="product-thumb">
