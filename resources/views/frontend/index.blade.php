@@ -97,7 +97,7 @@
 
 
 <section>
-    <div class="about-editorial-root py-5 position-relative overflow-hidden">
+    <div class="about-editorial-root py-2 position-relative overflow-hidden">
         @if($about)
         <div class="art-background-layer">
             
@@ -261,7 +261,7 @@ defineProps({ about: Object });
 </style>
 
 <section class="product-area">
-    <div class="container-fluid pb-lg-60">
+    <div class="container-fluid pb-0">
         <div class="row">
             <div class="col-sm-8 m-auto">
                 <div class="section-title text-center mb-1">
@@ -554,7 +554,7 @@ defineProps({ about: Object });
 </section> --}}
     <!--== Start Blog Area Wrapper ==-->
     <section class="blog-area">
-        <div class="container-fluid pt-95 pb-100 pt-lg-70 pb-lg-65">
+        <div class="container-fluid pt-0 pb-0 ">
           <div class="row">
             <div class="col-sm-8 m-auto">
               <div class="section-title text-center">
