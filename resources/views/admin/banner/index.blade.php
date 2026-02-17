@@ -17,7 +17,7 @@
                 <div class="col-md-4">
                     <label>Current Image:</label>
                     @if($banner->image)
-                        <img src="{{ asset('storage/'.$banner->image) }}" class="img-fluid border rounded" style="max-height: 200px; object-fit: cover;">
+                        <img src="{{ asset($banner->image) }}" class="img-fluid border rounded" style="max-height: 200px; object-fit: cover;">
                     @else
                         <div class="p-4 bg-light text-center border">No image set</div>
                     @endif
