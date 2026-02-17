@@ -388,7 +388,7 @@
 
     <!--== Start Footer Connect Section ==-->
     <section class="footer-connect-section">
-      <div class="container">
+      <div class="container-fluid">
         <div class="row">
           <div class="col-lg-6 mb-4 mb-lg-0">
             <div class="social-connect-box text-center">

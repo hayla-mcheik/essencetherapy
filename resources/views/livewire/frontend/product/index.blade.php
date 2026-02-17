@@ -2,9 +2,9 @@
 
             <!--== Start Product Area Wrapper ==-->
     <section class="product-area">
-        <div class="container pb-55">
+        <div class="container-fluid pb-55">
           <div class="row">
-            <div class="col-lg-3 order-1 order-lg-1">
+            <div class="col-lg-2 order-1 order-lg-1">
               <!--== Start Sidebar Area ==-->
           <div class="shop-sidebar-wrapper">
     <div class="sidebar-item">
@@ -29,7 +29,7 @@
     </div>
               <!--== End Sidebar Area ==-->
             </div>
-            <div class="col-lg-9 order-0 order-lg-2">
+            <div class="col-lg-10 order-0 order-lg-2">
               <!--== Start Shop Area ==-->
               <div class="product-header-wrap">
                 <div class="row">

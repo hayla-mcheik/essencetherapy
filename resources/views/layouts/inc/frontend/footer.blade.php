@@ -1,6 +1,6 @@
 <!--== Start Footer Area Wrapper ==-->
 <footer class="footer-area">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-12">
         <!--== Start Footer Widget Area ==-->

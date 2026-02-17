@@ -262,7 +262,7 @@ defineProps({ about: Object });
 </style>
 
 <section class="product-area">
-    <div class="container pb-lg-60">
+    <div class="container-fluid pb-lg-60">
         <div class="row">
             <div class="col-sm-8 m-auto">
                 <div class="section-title text-center mb-1">
@@ -309,23 +309,28 @@ defineProps({ about: Object });
                                     @endif
                                 </ul>
                             </div>
-
-                            <div class="product-desc" style="padding: 10px 0;">
-                                <div class="product-info text-center">
-                                    <h4 class="title" style="margin-bottom: 5px;">
-                                        <a href="{{ url('/collections/'.$product->category->slug.'/'.$product->slug) }}" 
-                                           style="color:#51555a; font-size: 0.75rem; font-weight: 700;">
-                                            {{ $product->name }}
-                                        </a>
-                                    </h4>
-                                    <div class="prices">
-                                        @if($product->original_price > $product->selling_price)
-                                            <span class="price-old" style="font-size: 10px; color: #51555a; text-decoration: line-through; margin-right: 5px;">€{{ $product->original_price }}</span>
-                                        @endif
-                                        <span class="price" style="font-size: 12px; font-weight: 600; color: #D97DA5;">€{{ $product->selling_price }}</span>
-                                    </div>
-                                </div>
-                            </div>
+<div class="product-desc" style="padding: 0px 0;">
+    <div class="product-info">
+        <div class="d-flex justify-content-between align-items-center px-4 pt-2 pb-2">
+            <h4 class="title" style="margin-bottom: 0;">
+                <a href="{{ url('/collections/'.$product->category->slug.'/'.$product->slug) }}" 
+                   style="color:#51555a; font-size: 0.75rem; font-weight: 700;">
+                    {{ $product->name }}
+                </a>
+            </h4>
+            <a href="{{ url('/collections/'.$product->category->slug.'/'.$product->slug) }}" 
+               style="color: #fff; font-size: 12px;">
+                <i class="fa fa-arrow-right"></i>
+            </a>
+        </div>
+        {{-- <div class="prices mt-1">
+            @if($product->original_price > $product->selling_price)
+                <span class="price-old" style="font-size: 10px; color: #51555a; text-decoration: line-through; margin-right: 5px;">€{{ $product->original_price }}</span>
+            @endif
+            <span class="price" style="font-size: 12px; font-weight: 600; color: #D97DA5;">€{{ $product->selling_price }}</span>
+        </div> --}}
+    </div>
+</div>
                         </div>
                     </div>
                 </div>
@@ -550,7 +555,7 @@ defineProps({ about: Object });
 </section> --}}
     <!--== Start Blog Area Wrapper ==-->
     <section class="blog-area">
-        <div class="container pt-95 pb-100 pt-lg-70 pb-lg-65">
+        <div class="container-fluid pt-95 pb-100 pt-lg-70 pb-lg-65">
           <div class="row">
             <div class="col-sm-8 m-auto">
               <div class="section-title text-center">
@@ -587,6 +592,54 @@ defineProps({ about: Object });
       </section>
       <!--== End Blog Area Wrapper ==-->
 
+<section class="instagram-shop-area py-5">
+    <div class="container-fluid text-center">
+                <div class="row">
+            <div class="col-sm-8 m-auto">
+                <div class="section-title text-center mb-1">
+                    <h2 class="title" style="text-transform: capitalize;">Shop Our Instagram</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            @foreach($instaFeeds as $item)
+                <div class="col-6 col-md-3">
+                    <div class="insta-card position-relative overflow-hidden">
+                        <img src="{{ asset($item->image) }}" class="w-100 h-100 object-fit-cover" style="aspect-ratio: 1/1;">
+                        
+                        <div class="insta-overlay">
+                            <div class="d-flex flex-column gap-2">
+                                <a href="{{ url('collections/'.$item->product->category->slug.'/'.$item->product->slug) }}" class="btn btn-light btn-sm">
+                                    Shop {{ $item->product->name }}<br>
+                                    <strong>${{ $item->product->selling_price }}</strong>
+                                </a>
+
+                                @if($item->insta_link)
+                                    <a href="{{ $item->insta_link }}" target="_blank" class="btn btn-outline-light btn-sm">
+                                        <i class="fa fa-instagram"></i> View on Instagram
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+<style>
+.insta-card .insta-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.3s;
+}
+.insta-card:hover .insta-overlay { opacity: 1; }
+</style>
 
 <style>
    .product-item{

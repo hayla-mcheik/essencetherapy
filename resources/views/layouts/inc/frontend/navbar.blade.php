@@ -187,7 +187,7 @@
 
     <!--== Start Header Bottom ==-->
     <div class="header-bottom sticky-header hidden-md-down">
-      <div class="container">
+      <div class="container-fluid">
         <div class="row align-items-center">
           <div class="col col-12 position-relative">
             <div class="header-align align-default justify-content-center">

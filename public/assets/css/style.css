@@ -1351,7 +1351,7 @@ section .container-fluid {
   padding: 0;
 }
 .header-area .container-fluid {
-  padding: 0 90px;
+  padding: 0 20px;
 }
 @media only screen and (max-width: 1399.98px) {
   .header-area .container-fluid {
@@ -1804,7 +1804,7 @@ section .container-fluid {
 .header-area .header-middle .contact-link {
   margin-right: 0;
   position: relative;
-  padding-left: 40px;
+  padding-left: 0px;
 }
 @media only screen and (max-width: 1199px) {
   .header-area .header-middle .contact-link {
@@ -2102,6 +2102,7 @@ section .container-fluid {
   position: relative;
   top: -1px;
   margin-right: 1px;
+  font-size: 12px;
 }
 .header-area .contact-link .phone a {
   color: #51555a;
@@ -2250,7 +2251,7 @@ section .container-fluid {
 }
 .header-area .header-action-area .shop-button-group .shop-button-item .shop-button .icon {
   color: #51555a;
-  font-size: 24px;
+  font-size: 16px;
   transition: all 0.3s ease-out;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
@@ -2261,21 +2262,21 @@ section .container-fluid {
   background-color: var(--logo-pink-dark);
   display: inline-block;
   color: #fff;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
   padding-top: 0px;
   text-align: center;
-  line-height: 20px;
-  left: 17px;
-  top: calc(100% - 16px);
+  line-height: 15px;
+  left: 12px;
+  top: calc(100% - 10px);
   border-radius: 50%;
 }
 .header-area .header-action-area .shop-button-group .shop-button-item .shop-button .cart-total {
   color: #51555a;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 700;
   margin-left: 12px;
   position: relative;
@@ -2515,7 +2516,7 @@ section .container-fluid {
 }
 .responsive-header .header-item .btn-menu {
   color: #51555a;
-  font-size: 21px;
+  font-size: 16px;
   height: 30px;
   line-height: 34px;
   background-color: transparent;
@@ -2552,10 +2553,10 @@ section .container-fluid {
   background-color: transparent;
   border: none;
   color: #51555a;
-  font-size: 24px;
+  font-size: 14px;
   padding: 0;
-  height: 30px;
-  line-height: 35px;
+  height: 22px;
+  line-height: 22px;
   margin-left: 14px;
   position: relative;
   padding-right: 12px;
@@ -2571,12 +2572,12 @@ section .container-fluid {
   color: #fff;
   position: absolute;
   bottom: 0px;
-  left: 16px;
+  left: 10px;
   display: inline-block;
-  width: 20px;
-  height: 20px;
-  line-height: 19px;
-  font-size: 11px;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  font-size: 9px;
   border-radius: 100%;
   text-align: center;
 }
@@ -4208,9 +4209,9 @@ height: 30vh;
 -----------------------------------------------------------------------
 */
 .product-item .inner-content {
-  background-color: #f3f3f3;
+  background-color:transparent;
   position: relative;
-  padding: 15px;
+  padding: 0px;
   text-align: center;
   transition: all 0.4s ease-out;
   -webkit-transition: all 0.4s ease-out;
@@ -4365,13 +4366,12 @@ height: 30vh;
 }
 
 .product-item .inner-content .product-info {
-  background-color: #fff;
-  padding-top: 22px;
+  padding-top: 6px;
   padding-bottom: 6px;
   text-align: center;
 }
 .product-item .inner-content .product-info .title {
-  color: #51555a;
+  color: #fff;
   font-size: 17px;
   font-weight: 400;
   line-height: 1;
@@ -4383,10 +4383,10 @@ height: 30vh;
   }
 }
 .product-item .inner-content .product-info .title a {
-  color: #51555a;
+  color: #f8f8f8 !important;
 }
 .product-item .inner-content .product-info .title a:hover {
-  color: var(--logo-pink-dark);
+  color: white;
 }
 .product-item .inner-content .product-info .star-content {
   margin-bottom: 6px;
@@ -4405,7 +4405,7 @@ height: 30vh;
   line-height: 1;
 }
 .product-item .inner-content .product-info .prices .price {
-  color: var(--logo-pink-dark);
+  color: rgb(227, 220, 220) !important;
   font-size: 18px;
   font-weight: 700;
   line-height: 1;
@@ -4509,6 +4509,10 @@ height: 30vh;
 }
 .product-item .inner-content .product-desc {
   position: relative;
+}
+.product-desc{
+  background-color: var(--logo-pink-dark);
+  color: white;
 }
 .product-item .inner-content .product-desc .product-footer {
   -webkit-box-align: center;
@@ -7700,14 +7704,14 @@ font-size: 12px;
 }
 .contact-info-list .contact-info .info-item .info .title {
   color: var(--logo-pink-dark);
-  font-size: 30px;
+  font-size: 14px;
   font-weight: 600;
   margin-bottom: 16px;
 }
 .contact-info-list .contact-info .info-item .info p {
   color: rgba(15, 15, 15, 0.6509803922);
   font-weight: 400;
-  font-size: 18px;
+  font-size: 12px;
   line-height: 1.8;
   letter-spacing: 0.5px;
 }
@@ -7728,22 +7732,22 @@ font-size: 12px;
 }
 .contact-page-wrapper .contact-form-wrap .contact-form-title .sub-title {
   font-weight: 400;
-  font-size: 30px;
+  font-size: 16px;
   margin-bottom: 10px;
 }
 @media only screen and (max-width: 1199px) {
   .contact-page-wrapper .contact-form-wrap .contact-form-title .sub-title {
-    font-size: 20px;
+    font-size: 12px;
     margin-bottom: 10px;
   }
 }
 .contact-page-wrapper .contact-form-wrap .contact-form-title .title {
-  font-size: 42px;
+  font-size: 16px;
   margin-bottom: 38px;
 }
 @media only screen and (max-width: 1199px) {
   .contact-page-wrapper .contact-form-wrap .contact-form-title .title {
-    font-size: 32px;
+    font-size: 16px;
     margin-bottom: 28px;
   }
 }
@@ -7759,7 +7763,7 @@ font-size: 12px;
   border-radius: 50px;
   color: #b2b2b2;
   display: inline-block;
-  font-size: 14px;
+  font-size: 12px;
   height: 52px;
   padding: 13px 120px 10px 30px;
   width: 100%;
@@ -7783,7 +7787,7 @@ font-size: 12px;
           box-shadow: none;
   border-radius: 50px;
   color: #fff;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   height: 40px;
   line-height: 40px;
@@ -7808,15 +7812,15 @@ font-size: 12px;
 -----------------------------------------------------------------------
 */
 .footer-area {
-  background: #51555a;
-  padding: 0px 0 0;
+  background: transparent;
+  padding: 0px 0 0 !important;
 }
 .all-categories h4 , .shop-sidebar-wrapper .sidebar-item .sidebar-title a{
-  font-size: 20px;
+  font-size: 18px;
   color: #51555a;
 }
 .category-card-body h5 , .shop-sidebar-wrapper .sidebar-item .small-title{
-font-size: 16px;
+font-size: 12px;
 font-weight: 700;
 }
 @media only screen and (max-width: 991px) {

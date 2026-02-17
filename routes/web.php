@@ -91,7 +91,11 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function () {
     Route::get('promocode/edit/{id}',[App\Http\Controllers\Admin\PromocodeController::class,'edit'])->name('admin.promocode.edit');
     Route::put('promocode/{id}',[App\Http\Controllers\Admin\PromocodeController::class,'update'])->name('admin.promocode.update');
     Route::get('dashboard',[App\Http\Controllers\Admin\DashboardController::class, 'index']);
-
+Route::controller(App\Http\Controllers\Admin\InstagramController::class)->group(function () {
+        Route::get('/instagram', 'index');
+        Route::get('/instagram/create', 'create');
+        Route::post('/instagram', 'store');
+    });
 Route::get('settings',[App\Http\Controllers\Admin\SettingController::class, 'index']);
 Route::post('settings',[App\Http\Controllers\Admin\SettingController::class, 'store']);
 

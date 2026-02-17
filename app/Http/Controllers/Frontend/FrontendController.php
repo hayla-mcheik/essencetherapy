@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactFormMail;
 use App\Models\Banner;
+use App\Models\InstagramFeed;
 use App\Models\Subscriber;
 
 class FrontendController extends Controller
@@ -28,7 +29,8 @@ class FrontendController extends Controller
         $threecategories = Category::where('status','0')->take(3)->get();
         $blogs = Blogs::all();
 $banner = Banner::first();
-        return view('frontend.index',compact('sliders','about','trendingProducts','newArrivalsProducts','featuredProducts','categories','reviews','threecategories','blogs','banner'));
+$instaFeeds = InstagramFeed::where('status','0')->latest()->take(8)->get();
+        return view('frontend.index',compact('sliders','about','trendingProducts','newArrivalsProducts','featuredProducts','categories','reviews','threecategories','blogs','banner','instaFeeds'));
     }
 
 

@@ -52,4 +52,10 @@ public function getOrderItemCountAttribute()
 {
     return $this->orderItems->count();
 }
+
+public function instaFeeds()
+{
+    return $this->hasMany(InstagramFeed::class, 'product_id', 'id');
+}
+
 }
