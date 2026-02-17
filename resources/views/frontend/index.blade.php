@@ -167,11 +167,10 @@ defineProps({ about: Object });
     top: 50%;
     left: 13%;
     transform: translateY(-50%);
-    font-family: 'Playfair Display', serif;
     font-size: 10vw;
     font-weight: 900;
     color: #d97da50d !important; /* Extremely subtle grey-white */
-    letter-spacing: -5px;
+    letter-spacing: 1px;
     line-height: 0.8;
     white-space: nowrap;
     z-index: 1;
@@ -253,7 +252,7 @@ defineProps({ about: Object });
 }
 
 @media (max-width: 768px) {
-    .large-bg-text { font-size: 10vw; left: -10%; }
+    .large-bg-text { font-size: 10vw; left: 4%;letter-spacing: 1px;}
     .display-title { font-size: 1.1rem; margin-top: 20px !important; }
     .editorial-text { font-size: 0.7rem; max-width: 100%; }
     .footer-compact { flex-direction: column; align-items: flex-start; gap: 15px; }
@@ -639,6 +638,12 @@ defineProps({ about: Object });
     transition: 0.3s;
 }
 .insta-card:hover .insta-overlay { opacity: 1; }
+.insta-overlay .btn{
+background: var(--logo-pink-dark);
+color: white;
+border: transparent;
+font-size: 12px;
+}
 </style>
 
 <style>

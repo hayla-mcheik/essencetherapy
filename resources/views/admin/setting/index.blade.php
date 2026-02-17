@@ -90,7 +90,10 @@
             <label>Email Id 2</label>
             <input type="text" name="email2" value="{{ $setting->email2  ?? '' }}" class="form-control" />
 </div>
-
+<div class="col-md-6 mb-3">
+    <label>Facebook Pixel ID</label>
+    <input type="text" name="facebook_pixel_id" value="{{ $appSetting->facebook_pixel_id }}" class="form-control" placeholder="Ex: 1234567890" />
+</div>
 
 </div>
 </div>
