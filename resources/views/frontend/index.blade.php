@@ -261,7 +261,7 @@ defineProps({ about: Object });
 </style>
 
 <section class="product-area">
-    <div class="container-fluid pb-0">
+    <div class="container pb-0">
         <div class="row">
             <div class="col-sm-8 m-auto">
                 <div class="section-title text-center mb-1">
@@ -273,7 +273,7 @@ defineProps({ about: Object });
         <div class="row">
             {{-- Using newArrivalsProducts and taking only 6 items --}}
             @forelse ($newArrivalsProducts->take(6) as $product)
-                <div class="col-6 col-md-4 col-lg-4 mb-30 p-0">
+                <div class="col-6 col-md-4 col-lg-3 mb-30 p-0">
                     <div class="product-item">
                         <div class="inner-content">
                             <div class="product-thumb">
@@ -554,7 +554,7 @@ defineProps({ about: Object });
 </section> --}}
     <!--== Start Blog Area Wrapper ==-->
     <section class="blog-area">
-        <div class="container-fluid pt-0 pb-0 ">
+        <div class="container pt-0 pb-0 ">
           <div class="row">
             <div class="col-sm-8 m-auto">
               <div class="section-title text-center">
@@ -591,7 +591,7 @@ defineProps({ about: Object });
       </section>
       <!--== End Blog Area Wrapper ==-->
 
-<section class="instagram-shop-area py-5">
+{{-- <section class="instagram-shop-area py-5">
     <div class="container-fluid text-center">
                 <div class="row">
             <div class="col-sm-8 m-auto">
@@ -644,7 +644,7 @@ color: white;
 border: transparent;
 font-size: 12px;
 }
-</style>
+</style> --}}
 
 <style>
    .product-item{

@@ -46,15 +46,21 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="swiper-container single-product-nav-content single-product-nav-slider2">
-                                <div class="swiper-wrapper">
-                                    @foreach($product->productImages as $index => $itemImg)
-                                        <div class="swiper-slide">
-                                            <img src="{{ asset($itemImg->image) }}" class="thumbnail-image" alt="Image-HasTech" data-index="{{ $index }}" data-image="{{ asset($itemImg->image) }}">
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
+              <div class="swiper-container single-product-nav-content single-product-nav-slider2">
+    <div class="swiper-wrapper">
+        @foreach($product->productImages as $index => $itemImg)
+            <div class="swiper-slide">
+                <div class="thumb-img-wrapper">
+                    <img src="{{ asset($itemImg->image) }}" 
+                         class="thumbnail-image" 
+                         alt="Product Image" 
+                         data-index="{{ $index }}" 
+                         data-image="{{ asset($itemImg->image) }}">
+                </div>
+            </div>
+        @endforeach
+    </div>
+</div>
                         </div>
                     @endif
                     </div>

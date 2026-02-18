@@ -27,7 +27,7 @@
 </div>
           <div class="col-md-6 col-lg-4 text-md-end text-center mt-sm-15">
             @guest
-            <div class="theme-setting">
+            {{-- <div class="theme-setting">
               <a class="dropdown-btn" href="#" role="button">
                 Login/Register
                 <i class="ion-ios-arrow-down"></i> 
@@ -46,8 +46,10 @@
 
 
               </ul>
-            </div>
-
+            </div> --}}
+<div class="theme-setting">
+  
+</div>
             @elseif (auth()->user()->role_as == '1')
             <div class="theme-setting">
               <a class="dropdown-btn" href="#" role="button">
