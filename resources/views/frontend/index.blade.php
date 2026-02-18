@@ -6,7 +6,7 @@
 
 <section class="home-slider-area pt-0 p-0">
     <div class="container-fluid p-0 pt-2 pb-2"> <div class="row g-0 align-items-center">
-<div class="col-lg-3 d-none d-lg-block">
+<div class="col-lg-3 d-none d-lg-block p-0">
     <div class="featured-banner-left" style="position: relative; overflow: hidden; height: 70vh;">
         @if(isset($banner) && $banner && $banner->image)
             <img src="{{ asset($banner->image) }}"
@@ -48,7 +48,7 @@
     </div>
 </div>
 
-            <div class="col-12 col-lg-9">
+            <div class="col-12 col-lg-9 p-1">
                 <div class="swiper-container swiper-pagination-style dots-bg-light home-slider-container default-slider-container" style="height: 70vh;">
                     <div class="swiper-wrapper home-slider-wrapper slider-default">
                         

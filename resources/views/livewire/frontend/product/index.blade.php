@@ -82,7 +82,7 @@
                                                     </ul>
                                                 </div>
 
-                                                <div class="product-desc" style="padding: 10px 0;">
+                                                <div class="product-desc" style="padding: 10px 10px;">
                                                     <div class="product-info">
                                                         <h4 class="title" style="margin-bottom: 5px;">
                                                             <a href="{{ url('/collections/'.$productItem->category->slug.'/'.$productItem->slug) }}" 
@@ -94,11 +94,11 @@
                                                         <div class="prices text-start">
                                                             {{-- Old Price Logic --}}
                                                             @if($productItem->original_price > $productItem->selling_price)
-                                                                <span class="price-old" style="font-size: 10px; color: #999; text-decoration: line-through; margin-right: 5px;">
+                                                                <span class="price-old" style="font-size: 10px; color: #e3dcdc; text-decoration: line-through; margin-right: 5px;">
                                                                     €{{ $productItem->original_price }}
                                                                 </span>
                                                             @endif
-                                                            <span class="price" style="font-size: 12px; font-weight: 600; color: #D97DA5;">
+                                                            <span class="price" style="font-size: 12px; font-weight: 600; color: white;">
                                                                 €{{ $productItem->selling_price }}
                                                             </span>
                                                         </div>
