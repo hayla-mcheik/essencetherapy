@@ -35,11 +35,7 @@
                   </div>
                   <div class="content">
                     <h4 class="title"><a href="{{ url('blog/details/'. $blog->id) }}">{{ $blog->title }}</a></h4>
-                    <div class="meta">
-                      <span>Posted by</span>
-                      <a class="author">{{ $blog->by }}</a>
-                      <a class="date" >{{$blog->date}}</a>
-                    </div>
+     
                   </div>
                 </div>
               </div>
