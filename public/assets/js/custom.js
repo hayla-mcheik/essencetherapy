@@ -100,24 +100,47 @@
     $("body").removeClass("fix");
   });
 
-  // Hero Slider Js
-    var carouselSlider = new Swiper('.default-slider-container', {
-      slidesPerView : 1,
-      slidesPerGroup: 1,
-      loop: true,
-      speed: 500,
-      spaceBetween: 0,
-      autoplay: false,
-      effect: 'fade',
-      fadeEffect: {
+// Hero Slider Js
+var carouselSlider = new Swiper('.default-slider-container', {
+    slidesPerView : 1,
+    slidesPerGroup: 1,
+    loop: true,
+    speed: 1000, // Slowed down slightly for a smoother luxury fade
+    spaceBetween: 0,
+    autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+    },
+    effect: 'fade',
+    fadeEffect: {
         crossFade: true,
-      },
-      pagination: {
+    },
+    // Required to trigger CSS animations on every slide change
+    watchSlidesProgress: true, 
+    pagination: {
         el: '.swiper-pagination',
         clickable: true,
         type: 'bullets',
-      },
-    });
+    },
+    // Optional: Forces animations to reset and play again on slide change
+    on: {
+        slideChangeTransitionStart: function () {
+            // This ensures text doesn't 'pop' in before the fade is ready
+            var activeSlide = this.slides[this.activeIndex];
+            var animatedElements = activeSlide.querySelectorAll('.ani-left, .ani-right, .ani-bottom');
+            animatedElements.forEach(function(el) {
+                el.style.visibility = 'hidden';
+            });
+        },
+        slideChangeTransitionEnd: function () {
+            var activeSlide = this.slides[this.activeIndex];
+            var animatedElements = activeSlide.querySelectorAll('.ani-left, .ani-right, .ani-bottom');
+            animatedElements.forEach(function(el) {
+                el.style.visibility = 'visible';
+            });
+        }
+    }
+});
 
   // Swiper Slider Js
 

@@ -5,67 +5,74 @@
 
 
 <section class="home-slider-area pt-0 p-0">
-    <div class="container-fluid p-0 pt-2 pb-2"> <div class="row g-0 align-items-center">
-<div class="col-lg-3 d-none d-lg-block p-0">
-    <div class="featured-banner-left" style="position: relative; overflow: hidden; height: 70vh;">
-        @if(isset($banner) && $banner && $banner->image)
-            <img src="{{ asset($banner->image) }}"
-                 alt="{{ $banner->title ?? 'Featured Collection' }}" 
-                 style="width: 100%; height: 100%; object-fit: cover;">
+    <div class="container-fluid p-0 pt-2 pb-2">
+        <div class="row g-0 align-items-center">
             
-            <div class="banner-overlay-text" style="position: absolute; bottom: 30px; left: 20px; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">
-                @if($banner->subtitle)
-                    <h6 style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;">
-                        {{ $banner->subtitle }}
-                    </h6>
-                @else
-                    <h6 style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;">
-                        New Arrivals
-                    </h6>
-                @endif
-                
-                @if($banner->title)
-                    <h4 style="font-size: 18px; font-weight: 600; line-height: 1.4;">
-                        {!! nl2br(e($banner->title)) !!}
-                    </h4>
-                @else
-                    <h4 style="font-size: 18px; font-weight: 600; line-height: 1.4;">
-                        The Pearl <br> Collection
-                    </h4>
-                @endif
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="featured-banner-left" style="position: relative; overflow: hidden; height: 70vh;">
+                    
+                    <div class="left-banner-overlay" style="
+                        position: absolute; 
+                        top: 0; 
+                        left: 0; 
+                        width: 100%; 
+                        height: 100%; 
+                        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0) 100%);
+                        z-index: 1;">
+                    </div>
+
+                    @if(isset($banner) && $banner && $banner->image)
+                        <img src="{{ asset($banner->image) }}"
+                             alt="{{ $banner->title ?? 'Featured Collection' }}" 
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                        
+                        <div class="banner-overlay-text" style="position: absolute; bottom: 30px; left: 20px; color: #fff; z-index: 2; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">
+                            <h6 style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;">
+                                {{ $banner->subtitle ?? 'New Arrivals' }}
+                            </h6>
+                            <h4 style="font-size: 18px; font-weight: 600; line-height: 1.4;">
+                                {!! isset($banner->title) ? nl2br(e($banner->title)) : 'The Pearl <br> Collection' !!}
+                            </h4>
+                        </div>
+                    @else
+                        <img src="{{ asset('assets/img/image-left.jpg') }}" alt="Default Banner" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="banner-overlay-text" style="position: absolute; bottom: 30px; left: 20px; color: #fff; z-index: 2;">
+                            <h6 style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">New Arrivals</h6>
+                            <h4 style="font-size: 18px; font-weight: 600;">The Pearl <br> Collection</h4>
+                        </div>
+                    @endif
+                </div>
             </div>
-        @else
-            <!-- Default fallback banner -->
-            <img src="{{ asset('assets/img/image-left.jpg') }}" 
-                 alt="Default Banner" 
-                 style="width: 100%; height: 100%; object-fit: cover;">
-            
-            <div class="banner-overlay-text" style="position: absolute; bottom: 30px; left: 20px; color: #fff;">
-                <h6 style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">New Arrivals</h6>
-                <h4 style="font-size: 18px; font-weight: 600;">The Pearl <br> Collection</h4>
-            </div>
-        @endif
-    </div>
-</div>
 
             <div class="col-12 col-lg-9 p-1">
                 <div class="swiper-container swiper-pagination-style dots-bg-light home-slider-container default-slider-container" style="height: 70vh;">
                     <div class="swiper-wrapper home-slider-wrapper slider-default">
                         
                         @foreach ($sliders as $key => $sliderItem)
-                        <div class="swiper-slide {{ $key == 0 ? 'active':''}}">
+                        <div class="swiper-slide">
                             @if ($sliderItem->image)
-                            <div class="slider-content-area" data-bg-img="{{ asset("$sliderItem->image") }}" style="height: 100%; background-size: cover; background-position: center;">
-                            @endif
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-10 col-sm-6 col-md-5">
-                                            <div class="slider-content slider-content-light animate-flipInX">
-                                                </div>
+                            <div class="slider-content-area" 
+                                 style="height: 100%; background-image: url('{{ asset($sliderItem->image) }}'); background-size: cover; background-position: center; position: relative;">
+                                
+                                <div class="slider-overlay"></div>
+
+                                <div class="container h-100" style="position: relative; z-index: 2;">
+                                    <div class="row h-100 align-items-center justify-content-center justify-content-lg-start">
+                                        <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+                                            <div class="slider-content slider-content-light text-center text-lg-start">
+                                                <h2 class="slider-title ani-left">
+                                                    {{ $sliderItem->title }}
+                                                </h2>
+                                                <p class="slider-desc ani-right">
+                                                    {{ $sliderItem->description }}
+                                                </p>
+                                
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
                         @endforeach
 
@@ -77,24 +84,107 @@
         </div>
     </div>
 </section>
+
 <style>
-    /* Styling to make the 3/9 split look integrated */
-    .featured-banner-left {
-        border-right: 1px solid #f2f2f2;
+    /* 1. Base Layout */
+    .featured-banner-left { border-right: 1px solid #f2f2f2; }
+    .home-slider-container { border-radius: 0; overflow: hidden; }
+
+    /* Desktop Overlay (Left to Right Fade) */
+    .slider-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);
+        z-index: 1;
+    }
+
+    /* 2. Typography & UI */
+    .slider-title {
+        color: #fff;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .slider-desc {
+        color: rgba(255,255,255,0.9);
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .custom-slider-btn {
+        border-radius: 0;
+        padding: 12px 35px;
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        border-width: 2px;
+        margin-top: 30px;
+    }
+
+    .custom-slider-btn:hover {
+        background-color: #fff !important;
+        color: #000 !important;
+        transform: translateY(-3px);
+    }
+
+    /* 3. Animations */
+    .slider-title, .slider-desc, .slider-btn {
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Desktop slide directions */
+    .ani-left   { transform: translateX(-60px); }
+    .ani-right  { transform: translateX(60px); }
+    .ani-bottom { transform: translateY(40px); }
+
+    .swiper-slide-active .slider-title,
+    .swiper-slide-active .slider-desc,
+    .swiper-slide-active .slider-btn {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(0, 0);
+    }
+
+    .swiper-slide-active .slider-title { transition-delay: 0.3s; }
+    .swiper-slide-active .slider-desc  { transition-delay: 0.5s; }
+    .swiper-slide-active .slider-btn   { transition-delay: 0.7s; }
+
+    /* 4. Responsive (Mobile & Tablet) */
+    @media (max-width: 991px) {
+        .home-slider-container, .featured-banner-left { height: 450px !important; }
+    }
+
+    @media (max-width: 767px) {
+        .home-slider-container { height: 350px !important; }
+
+        /* Darken entire overlay for mobile text readability */
+        .slider-overlay {
+            background: rgba(0,0,0,0.45) !important;
+        }
+
+        .slider-title { font-size: 22px !important; }
+        .slider-desc { font-size: 12px !important; padding: 0 10px; }
+
+        /* Change slide direction on mobile to vertical for cleaner look */
+        .ani-left   { transform: translateY(-30px); }
+        .ani-right  { transform: translateY(30px); }
     }
     
-    .home-slider-container {
-        border-radius: 0; /* Keep it sharp for luxury aesthetic */
-    }
-
-    /* Adjust height for mobile */
-    @media (max-width: 991px) {
-        .home-slider-container, .featured-banner-left {
-            height: 350px !important;
-        }
+    /* Hover effect for side banner */
+    .featured-banner-left img { transition: transform 1.5s ease; }
+    .featured-banner-left:hover img { transform: scale(1.05); }
+    .slider-content h2 , .slider-content p{
+        text-align: start;
+        padding: 0px;
     }
 </style>
-
 
 <section>
     <div class="about-editorial-root py-2 position-relative overflow-hidden">

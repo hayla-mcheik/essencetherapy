@@ -39,6 +39,7 @@ public function store(ProductFormRequest $request)
             ->withErrors(['image' => 'Please upload at least 2 images (front and back)'])
             ->withInput();
     }
+
     
     $category = Category::findOrFail($validatedData['category_id']);
 
