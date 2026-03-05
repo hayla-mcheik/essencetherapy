@@ -135,8 +135,8 @@
           <div class="col col-md-4 col-sm-12">
             <div class="header-logo-area text-center">
               <a href="{{url('/') }}">
-                <img class="logo-main" src="{{ asset('assets/img/logo.png')}}" alt="Logo">
-                <img class="logo-light d-none" src="{{asset('assets/img/logo-light.png')}}" alt="Logo">
+                <img class="logo-main" src="{{ asset('assets/img/logo.svg')}}" alt="Logo">
+                <img class="logo-light d-none" src="{{asset('assets/img/logo.svg')}}" alt="Logo">
               </a>
             </div>
           </div>
@@ -234,7 +234,7 @@
             <div class="header-item justify-content-center">
               <div class="header-logo-area">
                 <a href="{{ url('/')}}">
-                  <img class="logo-main" src="assets/img/logo.png" alt="Logo">
+                  <img class="logo-main" src="assets/img/logo.svg" alt="Logo">
                 </a>
               </div>
             </div>

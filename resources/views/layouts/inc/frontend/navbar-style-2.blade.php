@@ -116,7 +116,7 @@
             <div class="align-left">
               <div class="header-logo-area">
                 <a href="{{ url('/') }}">
-                  <img class="logo-main boutique-logo" src="{{ asset('assets/img/logo.png')}}" alt="Logo">
+                  <img class="logo-main boutique-logo" src="{{ asset('assets/img/logo.svg')}}" alt="Logo">
                 </a>
               </div>
               <div class="header-navigation-area hidden-md-down">
@@ -189,7 +189,7 @@
           <div class="header-item justify-content-center">
             <div class="header-logo-area">
               <a href="{{ url('/') }}">
-                <img class="logo-main boutique-logo" src="{{ asset('assets/img/logo.png')}}" alt="Logo">
+                <img class="logo-main boutique-logo" src="{{ asset('assets/img/logo.svg')}}" alt="Logo">
               </a>
             </div>
           </div>
