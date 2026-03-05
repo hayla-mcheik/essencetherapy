@@ -147,7 +147,7 @@
               <div class="contact-link float-start boutique-text-small">
                 <div class="phone">
                   <span>Call us:</span>
-                  <a href="tel:00961 79353846">00961 79353846</a>
+                  <a href="tel:76836886">76836886</a>
                 </div>
               </div>
               <div class="header-action-area float-start">
