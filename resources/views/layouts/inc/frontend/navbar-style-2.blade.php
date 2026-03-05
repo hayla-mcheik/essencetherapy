@@ -329,7 +329,7 @@
     }
 
     .shop-count {
-      background: #D97DA5 !important; /* Subtle gold/neutral tone for accessories */
+      background: #000 !important; /* Subtle gold/neutral tone for accessories */
       font-size: 9px !important;
     }
 

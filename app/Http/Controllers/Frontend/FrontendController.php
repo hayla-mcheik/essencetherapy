@@ -171,7 +171,7 @@ public function contactsubmit(Request $request)
         'message' => $request->message,
     ];
 
-    Mail::to('info@talyscollection.com')->send(new ContactFormMail($emailData));
+    Mail::to('mcheikhayla26@gmail.com')->send(new ContactFormMail($emailData));
     
     return back()->with('success', 'Your message has been submitted successfully.');
 }
