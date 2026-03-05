@@ -211,7 +211,7 @@
 
             <div class="footer-compact mt-5 d-flex align-items-center gap-4">
                 <div class="signature-wrap">
-                    <img src="/assets/img/logo.png" alt="Signature" class="about-sig-logo">
+                    <img src="/assets/img/logo.svg" alt="Signature" class="about-sig-logo">
             
                 </div>
             
